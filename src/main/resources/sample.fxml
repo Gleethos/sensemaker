@@ -1,0 +1,120 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import utils.Binding?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.TilePane?>
+<BorderPane fx:controller="sample.Controller"
+            fx:id="root"
+            xmlns:fx="http://javafx.com/fxml"
+>
+    <bottom>
+        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: linear-gradient(to bottom, paleturquoise, azure, paleturquoise);&#10;" text="(56, 32)" textAlignment="LEFT" BorderPane.alignment="CENTER" />
+    </bottom>
+    <center>
+        <SplitPane dividerPositions="0.3492462311557789" focusTraversable="true" prefHeight="160.0" prefWidth="200.0">
+            <items>
+                <SplitPane id="SplitPane" dividerPositions="0.6088328075709779" orientation="VERTICAL">
+                    <items>
+                        <TabPane prefHeight="200.0" prefWidth="200.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE">
+                            <tabs>
+                                <Tab text="A">
+                                    <content>
+                                        <TilePane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lavender;&#10;" />
+                                    </content>
+                                </Tab>
+                                <Tab text="B">
+                                    <content>
+                                        <TilePane prefHeight="200.0" prefWidth="200.0" />
+                                    </content>
+                                </Tab>
+                                <Tab text="C">
+                                    <content>
+                                        <TilePane prefHeight="200.0" prefWidth="200.0" />
+                                    </content>
+                                </Tab>
+                                <Tab text="D">
+                                    <content>
+                                        <TilePane prefHeight="200.0" prefWidth="200.0" />
+                                    </content>
+                                </Tab>
+                                <Tab text="E">
+                                    <content>
+                                        <TilePane prefHeight="200.0" prefWidth="200.0" />
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                        <TreeView prefHeight="200.0" prefWidth="200.0" />
+                    </items>
+                </SplitPane>
+                <AnchorPane
+                        minHeight="0.0"
+                        minWidth="0.0"
+                        prefHeight="80.0"
+                        prefWidth="50.0"
+                        style="-fx-background-color: palegreen;"
+                >
+                    <fx:include source="TouchPane.fxml" />
+                </AnchorPane>
+                <HBox>
+                    <Label>Firstname</Label>
+                    <TextField Binding.twoWay="{text=firstName}" />
+                    <Label>Lastname</Label>
+                    <TextField Binding.twoWay="{text=lastName}" />
+                    <Label>Displayname</Label>
+                    <Text Binding.oneWay="{text=displayName}" />
+                </HBox>
+            </items>
+        </SplitPane>
+    </center>
+    <top>
+        <VBox prefHeight="-1.0" prefWidth="-1.0">
+            <children>
+                <MenuBar>
+                    <menus>
+                        <Menu mnemonicParsing="false" text="File">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Close" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Edit">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Delete" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Help">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="About" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <ToolBar>
+                    <items>
+                        <Button mnemonicParsing="false" style="-fx-graphic: url('http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-9/24/open-file-icon.png');" text="" />
+                        <Button mnemonicParsing="false" style="-fx-graphic: url('http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-7/24/Save-icon.png');" text="" />
+                    </items>
+                </ToolBar>
+            </children>
+        </VBox>
+    </top>
+
+
+</BorderPane>

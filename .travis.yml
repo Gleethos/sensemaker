@@ -1,0 +1,23 @@
+language: java
+install: true
+
+os: linux
+dist: trusty
+jdk: oraclejdk11
+
+env:
+  - CODECOV_TOKEN="cd19009d-e1e2-4f2f-98d2-927e7632e0de"
+
+#================================
+
+before_install:
+  - chmod +x gradlew
+
+script:
+  - chmod +x gradlew
+  - ./gradlew test --info
+  - ./gradlew check
+  
+after_success:
+  - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
+  - bash <(curl -s https://codecov.io/bash) -f docs/coverage/test/jacocoTestReport.xml
