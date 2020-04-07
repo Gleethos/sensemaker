@@ -9,17 +9,14 @@ Any license under such intellectual property rights must be express and approved
  
 Unless otherwise agreed by Intel in writing, you may not remove or alter this notice or any other notice embedded in Materials by Intel or Intel’s suppliers or licensors in any way.
 */
-package touch;
+package gui.view;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import gui.view.subview.PiGameBannerView;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Toggle;
@@ -32,8 +29,12 @@ import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import gui.view.interfaces.*;
 
-public class TouchPaneController implements Initializable, IParentItem {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class PictureListView implements Initializable, IParentItem {
 
     public enum GestureSelection {
         SWIPE, SCROLL
@@ -56,17 +57,12 @@ public class TouchPaneController implements Initializable, IParentItem {
     @FXML
     private void handleAddElement(ActionEvent event) {
 
-        //MovableElementController elem = new MovableElementController(this);
-        //URL myURL = ClassLoader.getSystemResource("MovableElement.fxml");
-        //System.out.println(myURL);
-        //FXMLLoader loader = new FXMLLoader(myURL);//getClass().getResource("MovableElement.fxml"));
-        //loader.setController(this);//TODO: Make getter setter for loaded element controller...
-        MovableElementController elem = new MovableElementController(this);
+        PiGameBannerView elem = new PiGameBannerView(this);
 
-        elem.setTranslateX(touchPane.getWidth() / 2.0);
-        elem.setTranslateY(touchPane.getHeight() / 2.0);
-        elem.setScaleX(0.1);
-        elem.setScaleY(0.1);
+        elem.setTranslateX(touchPane.getWidth() / 8.0);
+        elem.setTranslateY(touchPane.getHeight() / 4.0);
+        elem.setScaleX(0.5);
+        elem.setScaleY(0.5);
         touchPane.getChildren().remove(buttons);
         touchPane.getChildren().add(elem);
         touchPane.getChildren().add(buttons);
@@ -76,7 +72,6 @@ public class TouchPaneController implements Initializable, IParentItem {
     public void initialize(URL url, ResourceBundle rb) {
         setScrollBtn.setUserData(GestureSelection.SCROLL);
         setSwipeBtn.setUserData(GestureSelection.SWIPE);
-
         gestureSelectionGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle oldValue, Toggle newValue) {
@@ -142,7 +137,7 @@ public class TouchPaneController implements Initializable, IParentItem {
             selNode.setScaleX(selNode.getScaleX() * t.getZoomFactor());
             selNode.setScaleY(selNode.getScaleY() * t.getZoomFactor());
             if(selNode instanceof  Pane){
-                ((Pane) selNode).getChildren().forEach((n)->{});
+                ((Pane) selNode).getChildren().forEach(n->{});
             }
         }
 

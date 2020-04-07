@@ -1,5 +1,3 @@
-package sample;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,11 +8,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(//getClass().getResource("sample.fxml"));
-        ClassLoader.getSystemResource("sample.fxml")
+        Parent root = FXMLLoader.load(//getClass().getResource("SenseMakerGUI.fxml"));
+        ClassLoader.getSystemResource("SenseMakerGUI.fxml")
         );
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("Pi-Play Console");
+        primaryStage.setScene(new Scene(root, 600, 375));
         primaryStage.show();
     }
 

@@ -1,6 +1,4 @@
 import org.junit.Test;
-import sample.Main;
-import touch.NSurface;
 
 public class TestSetup {
 
@@ -14,11 +12,7 @@ public class TestSetup {
         m.go();
 
 
-
-
-
     }
-
 
 
 

@@ -9,11 +9,8 @@ Any license under such intellectual property rights must be express and approved
  
 Unless otherwise agreed by Intel in writing, you may not remove or alter this notice or any other notice embedded in Materials by Intel or Intel’s suppliers or licensors in any way.
 */
-package touch;
+package gui.view.subview;
 
-import java.io.IOException;
-
-import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
@@ -23,17 +20,21 @@ import javafx.scene.input.SwipeEvent;
 import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.Pane;
 
-public class MovableElementController extends Pane implements IChildItem{
+import java.io.IOException;
+
+import gui.view.interfaces.*;
+
+public class PiGameBannerView extends Pane implements IChildItem{
 
     private IParentItem _parent;
     private boolean _moveInProgress = false;
     private int _touchPointId;
     private Point2D _prevPos;
 
-    public MovableElementController(IParentItem parentContainer){
+    public PiGameBannerView(IParentItem parentContainer){
         super();
         _parent = parentContainer;
-        FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("MovableElement.fxml"));
+        FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("PictureGUI.fxml"));
         loader.setRoot(this);
         loader.setController(this);
         try {
@@ -56,22 +57,15 @@ public class MovableElementController extends Pane implements IChildItem{
     }
 
     public void onTouchPressed(TouchEvent t) {
-        if(t.getTarget() instanceof SwingNode){
-            //SwingNode node = (SwingNode) t.getTarget();
-            //node.requestFocus();
-            //System.out.println("SWING!!!");
-        }else {
-            if (_moveInProgress == false) {
-                if (_parent.getFocusedItem() != MovableElementController.this) {
-                    _parent.unfocusItem();
-                    _parent.focusItem(MovableElementController.this);
-                }
-                _moveInProgress = true;
-                _touchPointId = t.getTouchPoint().getId();
-
-                _prevPos = new Point2D(t.getTouchPoint().getSceneX(), t.getTouchPoint().getSceneY());
-                System.out.println("TOUCH BEGIN " + t.toString());
+        if (!_moveInProgress) {
+            if (_parent.getFocusedItem() != PiGameBannerView.this) {
+                _parent.unfocusItem();
+                _parent.focusItem(PiGameBannerView.this);
             }
+            _moveInProgress = true;
+            _touchPointId = t.getTouchPoint().getId();
+            _prevPos = new Point2D(t.getTouchPoint().getSceneX(), t.getTouchPoint().getSceneY());
+            System.out.println("TOUCH BEGIN " + t.toString());
         }
         t.consume();
     }

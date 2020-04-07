@@ -10,7 +10,7 @@ Any license under such intellectual property rights must be express and approved
 
 Unless otherwise agreed by Intel in writing, you may not remove or alter this notice or any other notice embedded in Materials by Intel or Intel’s suppliers or licensors in any way.
 */
-package touch;
+package gui.view.interfaces;
 
 import javafx.scene.Node;
 
