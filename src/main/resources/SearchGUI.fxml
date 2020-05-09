@@ -19,13 +19,16 @@
             My Game
         </TextField>
         <TextField fx:id="firstNameTextField" promptText="Firstname">
-            Hi
+            Hio
         </TextField>
         <TextField fx:id="lastNameTextField" promptText="Lastname">
-            Hi
+            Hie
         </TextField>
-        <Text fx:id="displayText" >
+        <Text fx:id="displayText">
             Here...
         </Text>
+        <TextField text = "${controller.testText}">
+            there
+        </TextField>
     </HBox>
 </AnchorPane>

@@ -28,15 +28,16 @@
         <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: linear-gradient(to bottom, paleturquoise, azure, paleturquoise);&#10;" text="(56, 32)" textAlignment="LEFT" BorderPane.alignment="CENTER" />
     </bottom>
     <center>
-            <AnchorPane
-                    minHeight="0.0"
-                    minWidth="0.0"
-                    prefHeight="80.0"
-                    prefWidth="50.0"
-                    style="-fx-background-color: palegreen;"
-            >
+        <SplitPane>
+            <AnchorPane>
                 <fx:include source="PictureListGUI.fxml"/>
             </AnchorPane>
+            <AnchorPane>
+                <Button mnemonicParsing="false"
+                        style="-fx-graphic: url('http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-9/24/open-file-icon.png');"
+                        text=""/>
+            </AnchorPane>
+        </SplitPane>
     </center>
     <top>
         <VBox>

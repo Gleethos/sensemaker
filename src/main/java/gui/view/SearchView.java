@@ -1,6 +1,8 @@
 package gui.view;
 
 import gui.presentation.SearchPresentation;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -20,12 +22,12 @@ public class SearchView extends AbstractView<SearchPresentation> implements Init
     @FXML private TextField lastNameTextField;
     @FXML private Text displayText;
 
-    private SearchPresentation _presentation;
+    private final SearchPresentation _presentation;
 
     public SearchView() {
         super();
         _presentation = new SearchPresentation();
-
+        _log.info("New SearchView instantiated!");
     }
 
     @Override
@@ -38,9 +40,10 @@ public class SearchView extends AbstractView<SearchPresentation> implements Init
 
     @Override
     protected void _bind(SearchPresentation presentation) {
-        lastNameTextField.textProperty().bindBidirectional(displayText.textProperty());
+        _bidi(lastNameTextField, displayText);
+        //lastNameTextField.textProperty().bindBidirectional(displayText.textProperty());
         firstNameTextField.textProperty().addListener((s)->{
-            System.out.println("firstname changes! to : "+s);
+            _log.info("firstname changes! to : "+s);
         });
     }
 

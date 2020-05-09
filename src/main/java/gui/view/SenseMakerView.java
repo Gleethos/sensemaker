@@ -1,6 +1,7 @@
 package gui.view;
 
 import gui.presentation.SenseMakerPresentation;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
 
@@ -9,7 +10,7 @@ import java.util.ResourceBundle;
 
 public class SenseMakerView implements Initializable {
 
-
+    @FXML
     public BorderPane root;
 
     private SenseMakerPresentation _presentation;

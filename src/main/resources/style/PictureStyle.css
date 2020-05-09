@@ -3,13 +3,13 @@
  */
 
 .mainFxmlClassUnselected {
-    -fx-background-color: blue;
+    -fx-background-color: darkgray;
     -fx-border-width: 0;
 }
 
 .mainFxmlClassSelected {
-    -fx-background-color: blue;
-    -fx-border-color: black;
+    -fx-background-color: lightgray;
+    -fx-border-color: cyan;
     -fx-border-width: 3;
 }
 

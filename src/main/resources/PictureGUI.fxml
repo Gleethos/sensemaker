@@ -19,8 +19,6 @@
         onTouchMoved="#onTouchMoved"
         onTouchPressed="#onTouchPressed"
         onTouchReleased="#onTouchReleased"
-        prefHeight="550.0"
-        prefWidth="750.0"
         styleClass="mainFxmlClassUnselected"
         xmlns:fx="http://javafx.com/fxml"
 
@@ -51,7 +49,25 @@
             </HBox>
         </top>
         <center>
-            <SwingNode fx:id="RealmNode"/>
+            <TabPane>
+                <Tab fx:id="tab1" text="tab 1">
+                </Tab>
+
+                <Tab fx:id="tab2" text="tab 2">
+                    <VBox>
+                        <TextField fx:id="searchTextField" promptText="Search">
+                            My Game
+                        </TextField>
+                        <TextField fx:id="firstNameTextField" promptText="Firstname">
+                            Hi
+                        </TextField>
+                        <TextField fx:id="lastNameTextField" promptText="Lastname">
+                            Hi
+                        </TextField>
+                    </VBox>
+                </Tab>
+
+            </TabPane>
         </center>
 
     </BorderPane>

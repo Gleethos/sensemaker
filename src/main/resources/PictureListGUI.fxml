@@ -19,6 +19,7 @@
         onSwipeUp="#onSwipe"
         onZoom="#onZoom"
         fx:id="touchPane"
+        style="-fx-background-color: palegreen;"
     >
 
         <HBox

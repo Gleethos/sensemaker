@@ -1,23 +1,21 @@
 package gui.presentation;
 
-import gui.models.PiGame;
+import gui.models.PictureModel;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class SearchPresentation extends AbstractPresentation{
 
-    private final StringProperty twoWayInput = new SimpleStringProperty("DEFAULT");
-
     private StringBinding displayNameProperty;
 
-    PiGame piGame;
+    PictureModel pictureModel;
 
 
     public SearchPresentation(){
-        PiGame model = new PiGame();
-        model.getFirstNameProperty().addListener((s, o, n) -> displayNameProperty.invalidate());
-        model.getLastNameProperty().addListener((s, o, n) -> displayNameProperty.invalidate());
+        PictureModel model = new PictureModel();
+        //model.getFirstNameProperty().addListener((s, o, n) -> displayNameProperty.invalidate());
+        //model.getLastNameProperty().addListener((s, o, n) -> displayNameProperty.invalidate());
         refresh(model);
         displayNameProperty = new StringBinding() {
             @Override
@@ -31,39 +29,39 @@ public class SearchPresentation extends AbstractPresentation{
     }
 
 
-    public void refresh(PiGame model) {
-        piGame = model;
-        piGame.getFirstNameProperty().setValue(model.getFirstNameProperty().getValue());
-        piGame.getLastNameProperty().setValue(model.getLastNameProperty().getValue());
+    public void refresh(PictureModel model) {
+        pictureModel = model;
+        pictureModel.setFirstName(model.getFirstName());
+        pictureModel.setLastName(model.getLastName());
     }
 
-    public void applyChanges(PiGame model) {
-        model.setFirstNameProperty(piGame.getFirstNameProperty().getValue());
-        model.setLastNameProperty(piGame.getLastNameProperty().getValue());
+    public void applyChanges(PictureModel model) {
+        model.setFirstName(pictureModel.getFirstName());
+        model.setLastName(pictureModel.getLastName());
     }
 
     public String getFirstNameProperty() {
-        return piGame.getFirstNameProperty().get() != null ? piGame.getFirstNameProperty().get() : "";
+        return pictureModel.getFirstName() != null ? pictureModel.getFirstName() : "";
     }
 
     public StringProperty firstNamePropertyProperty() {
-        return piGame.getFirstNameProperty();
+        return pictureModel.getFirstNameProperty();
     }
 
     public void setFirstNameProperty(String firstNameProperty) {
-        this.piGame.getFirstNameProperty().set(firstNameProperty);
+        this.pictureModel.setFirstName(firstNameProperty);
     }
 
     public String getLastNameProperty() {
-        return piGame.getLastNameProperty().get() != null ? piGame.getLastNameProperty().get() : "";
+        return pictureModel.getLastName() != null ? pictureModel.getLastName() : "";
     }
 
     public StringProperty lastNamePropertyProperty() {
-        return piGame.getLastNameProperty();
+        return pictureModel.getLastName();
     }
 
     public void setLastNameProperty(String lastNameProperty) {
-        this.piGame.getLastNameProperty().set(lastNameProperty);
+        this.pictureModel.setLastName(lastNameProperty);
     }
 
     public String getDisplayNameProperty() {
