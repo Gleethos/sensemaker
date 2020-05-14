@@ -11,7 +11,7 @@ Unless otherwise agreed by Intel in writing, you may not remove or alter this no
 */
 package gui.view;
 
-import gui.view.subview.PiGameBannerView;
+import gui.view.subview.PictureView;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -57,7 +57,7 @@ public class PictureListView implements Initializable, IParentItem {
     @FXML
     private void handleAddElement(ActionEvent event) {
 
-        PiGameBannerView elem = new PiGameBannerView(this);
+        PictureView elem = new PictureView(this);
 
         elem.setTranslateX(touchPane.getWidth() / 8.0);
         elem.setTranslateY(touchPane.getHeight() / 4.0);

@@ -24,14 +24,14 @@ import java.io.IOException;
 
 import gui.view.interfaces.*;
 
-public class PiGameBannerView extends Pane implements IChildItem{
+public class PictureView extends Pane implements IChildItem{
 
     private IParentItem _parent;
     private boolean _moveInProgress = false;
     private int _touchPointId;
     private Point2D _prevPos;
 
-    public PiGameBannerView(IParentItem parentContainer){
+    public PictureView(IParentItem parentContainer){
         super();
         _parent = parentContainer;
         FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("PictureGUI.fxml"));
@@ -58,9 +58,9 @@ public class PiGameBannerView extends Pane implements IChildItem{
 
     public void onTouchPressed(TouchEvent t) {
         if (!_moveInProgress) {
-            if (_parent.getFocusedItem() != PiGameBannerView.this) {
+            if (_parent.getFocusedItem() != PictureView.this) {
                 _parent.unfocusItem();
-                _parent.focusItem(PiGameBannerView.this);
+                _parent.focusItem(PictureView.this);
             }
             _moveInProgress = true;
             _touchPointId = t.getTouchPoint().getId();

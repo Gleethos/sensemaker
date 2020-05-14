@@ -8,10 +8,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(//getClass().getResource("SenseMakerGUI.fxml"));
-        ClassLoader.getSystemResource("SenseMakerGUI.fxml")
+        Parent root = FXMLLoader.load(
+            ClassLoader.getSystemResource("SenseMakerGUI.fxml")
         );
-        primaryStage.setTitle("Pi-Play Console");
+        primaryStage.setTitle("Sensemaker");
         primaryStage.setScene(new Scene(root, 600, 375));
         primaryStage.show();
     }
