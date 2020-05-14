@@ -4,18 +4,22 @@ import gui.models.PictureModel;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 public class SearchPresentation extends AbstractPresentation{
 
     private StringBinding displayNameProperty;
+    private StringProperty firstNameProperty;
+    private StringProperty lastNameProperty;
+
 
     PictureModel pictureModel;
 
 
     public SearchPresentation(){
         PictureModel model = new PictureModel();
-        //model.getFirstNameProperty().addListener((s, o, n) -> displayNameProperty.invalidate());
-        //model.getLastNameProperty().addListener((s, o, n) -> displayNameProperty.invalidate());
+        //firstNameProperty.addListener((s, o, n) -> displayNameProperty.invalidate());
+        //lastNameProperty.addListener((s, o, n) -> displayNameProperty.invalidate());
         refresh(model);
         displayNameProperty = new StringBinding() {
             @Override
@@ -23,8 +27,8 @@ public class SearchPresentation extends AbstractPresentation{
                 return String.format("%s %s", getFirstNameProperty(), getLastNameProperty()).trim();
             }
         };
-
-
+        firstNameProperty = new SimpleStringProperty("test 1");
+        lastNameProperty = new SimpleStringProperty("test 2");
 
     }
 
@@ -45,7 +49,7 @@ public class SearchPresentation extends AbstractPresentation{
     }
 
     public StringProperty firstNamePropertyProperty() {
-        return pictureModel.getFirstNameProperty();
+        return firstNameProperty;
     }
 
     public void setFirstNameProperty(String firstNameProperty) {
@@ -57,7 +61,7 @@ public class SearchPresentation extends AbstractPresentation{
     }
 
     public StringProperty lastNamePropertyProperty() {
-        return pictureModel.getLastName();
+        return lastNameProperty;
     }
 
     public void setLastNameProperty(String lastNameProperty) {

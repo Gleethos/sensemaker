@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<?import javafx.scene.control.TextField?>
-
 <?import javafx.scene.text.Text?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
@@ -15,20 +8,20 @@
             fx:controller="gui.view.SearchView"
 >
     <HBox>
-        <TextField fx:id="searchTextField" promptText="Search">
-            My Game
+        <TextField fx:id="nameSearchTextField" promptText="Search">
+            Image Name
         </TextField>
-        <TextField fx:id="firstNameTextField" promptText="Firstname">
-            Hio
+        <TextField fx:id="dateSearchTextField" promptText="Date">
+            Date
         </TextField>
-        <TextField fx:id="lastNameTextField" promptText="Lastname">
-            Hie
+        <TextField fx:id="creatorSearchTextField" promptText="Creator">
+            Creator
         </TextField>
         <Text fx:id="displayText">
-            Here...
+            Binding test...
         </Text>
         <TextField text = "${controller.testText}">
-            there
+            fxml binding test...
         </TextField>
     </HBox>
 </AnchorPane>

@@ -12,7 +12,6 @@ import java.util.function.Consumer;
 
 public class SenseMakerModel
 {
-
     private static SenseMakerModel _instance = new SenseMakerModel();
 
     private SenseMakerModel()
@@ -20,9 +19,8 @@ public class SenseMakerModel
 
     }
 
-    public static SenseMakerModel instance(){
+    public static SenseMakerModel instance() {
         return _instance;
     }
-
 
 }

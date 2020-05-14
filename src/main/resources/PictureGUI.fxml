@@ -26,8 +26,10 @@
     <stylesheets>
         <URL value="@style/PictureStyle.css"/>
     </stylesheets>
-
     <BorderPane>
+        <padding>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+        </padding>
         <top>
             <HBox
                     fx:id="buttons"
@@ -36,33 +38,25 @@
                 <padding>
                     <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
                 </padding>
-                <Button id="addElementBtn" fx:id="resetSceneBtn" mnemonicParsing="false" text="Reset scene"/>
-                <Button id="resetSceneBtn" fx:id="addElementBtn" mnemonicParsing="false" text="Add element"/>
-                <ToggleButton id="scroll" fx:id="setScrollBtn" mnemonicParsing="false" selected="true"
-                              text="Scroll">
-                    <toggleGroup>
-                        <ToggleGroup fx:id="gestureSelectionGroup"/>
-                    </toggleGroup>
-                </ToggleButton>
-                <ToggleButton id="setScrollBtn" fx:id="setSwipeBtn" mnemonicParsing="false" text="Swipe"
-                              toggleGroup="$gestureSelectionGroup"/>
+                <Button id="addElementBtn" fx:id="resetSceneBtn" mnemonicParsing="false" text="Close"/>
+
             </HBox>
         </top>
         <center>
             <TabPane>
-                <Tab fx:id="tab1" text="tab 1">
+                <Tab fx:id="tab1" text="Image">
                 </Tab>
 
-                <Tab fx:id="tab2" text="tab 2">
+                <Tab fx:id="tab2" text="Properties">
                     <VBox>
-                        <TextField fx:id="searchTextField" promptText="Search">
-                            My Game
+                        <TextField fx:id="searchTextField" promptText="Date">
+                            Date
                         </TextField>
-                        <TextField fx:id="firstNameTextField" promptText="Firstname">
-                            Hi
+                        <TextField fx:id="firstNameTextField" promptText="Name">
+                            Name
                         </TextField>
-                        <TextField fx:id="lastNameTextField" promptText="Lastname">
-                            Hi
+                        <TextField fx:id="lastNameTextField" promptText="Size">
+                            Size
                         </TextField>
                     </VBox>
                 </Tab>
