@@ -2,7 +2,7 @@ package gui.presentation;
 
 import gui.models.SenseMakerModel;
 
-public class SenseMakerPresentation extends  AbstractPresentation {
+public class SenseMakerPresentation extends  AbstractPresentation<SenseMakerModel> {
 
     private static SenseMakerPresentation _instance = new SenseMakerPresentation();
 
@@ -21,4 +21,13 @@ public class SenseMakerPresentation extends  AbstractPresentation {
         return _instance;
     }
 
+    @Override
+    public void refresh(SenseMakerModel model) {
+
+    }
+
+    @Override
+    public void applyChanges(SenseMakerModel model) {
+
+    }
 }

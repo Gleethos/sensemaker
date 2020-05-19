@@ -1,0 +1,10 @@
+
+DROP TABLE IF EXISTS pictures
+--<#SPLIT#>--
+DROP TABLE IF EXISTS photographers;
+--<#SPLIT#>--
+DROP TABLE IF EXISTS IPTCs;
+--<#SPLIT#>--
+DROP TABLE IF EXISTS EXIFs
+--<#SPLIT#>--
+

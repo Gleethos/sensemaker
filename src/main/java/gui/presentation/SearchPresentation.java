@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import sun.java2d.pipe.SpanShapeRenderer;
 
-public class SearchPresentation extends AbstractPresentation{
+public class SearchPresentation extends AbstractPresentation<PictureModel>{
 
     private StringBinding displayNameProperty;
     private StringProperty firstNameProperty;
@@ -32,13 +32,14 @@ public class SearchPresentation extends AbstractPresentation{
 
     }
 
-
+    @Override
     public void refresh(PictureModel model) {
         pictureModel = model;
-        pictureModel.setFirstName(model.getFirstName());
-        pictureModel.setLastName(model.getLastName());
+        firstNameProperty.setValue(model.getFirstName());
+        lastNameProperty.setValue(model.getLastName());
     }
 
+    @Override
     public void applyChanges(PictureModel model) {
         model.setFirstName(pictureModel.getFirstName());
         model.setLastName(pictureModel.getLastName());

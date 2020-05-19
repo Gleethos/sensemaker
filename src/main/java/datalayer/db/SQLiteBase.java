@@ -1,9 +1,9 @@
-package db;
+package datalayer.db;
 
-public class SQLiteSingleton extends AbstractDatabaseConnection
+public class SQLiteBase extends AbstractDatabaseConnection
 {
 
-    private static SQLiteSingleton _instance;
+    private static SQLiteBase _instance;
 
     static{
         //Close DB-Connection upon System-Shutdown!
@@ -13,12 +13,12 @@ public class SQLiteSingleton extends AbstractDatabaseConnection
         }));
     }
 
-    private SQLiteSingleton(){
+    private SQLiteBase(){
         super("jdbc:sqlite:C:/sqlite/db/TempDB", "", "");
     }
 
-    public static SQLiteSingleton instance(){
-        if(_instance==null) _instance = new SQLiteSingleton();
+    public static SQLiteBase instance(){
+        if(_instance==null) _instance = new SQLiteBase();
         return _instance;
     }
 

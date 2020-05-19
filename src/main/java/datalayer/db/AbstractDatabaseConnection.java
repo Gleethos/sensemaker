@@ -1,4 +1,4 @@
-package db;
+package datalayer.db;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -80,7 +80,7 @@ public abstract class AbstractDatabaseConnection {
     protected void _executeFile(String name){
         Connection conn = _connection;
         String[] commands;
-        File file = new File("db/", name);
+        File file = new File("datalayer/", name);
         int fileLength = (int) file.length();
         try {
             byte[] fileData = _readFileData(file, fileLength);

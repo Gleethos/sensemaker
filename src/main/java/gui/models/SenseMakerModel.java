@@ -1,8 +1,6 @@
 package gui.models;
 
 import gui.IOFrame;
-import plugins.GameManager;
-import plugins.interfaces.IGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
