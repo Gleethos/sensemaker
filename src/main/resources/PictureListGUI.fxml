@@ -10,7 +10,7 @@
     <AnchorPane
         xmlns:fx="http://javafx.com/fxml"
         id="StackPane"
-        fx:controller="gui.view.PictureListView"
+        fx:controller="sensemaker.gui.view.PictureListView"
         onRotate="#onRotate"
         onScroll="#onScroll"
         onSwipeDown="#onSwipe"

@@ -1,4 +1,5 @@
 import org.junit.Test;
+import sensemaker.Main;
 
 public class TestSetup {
 
