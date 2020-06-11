@@ -8,10 +8,10 @@ import java.util.logging.Logger;
 
 public class DALFactory
 {
-    private static Logger _log = Logger.getLogger(DALFactory.class.getName());
+    private static final Logger _log = Logger.getLogger(DALFactory.class.getName());
     private boolean _doMocking = false;
 
-    private Class _dalclass;
+    private final Class _dalclass;
 
     public DALFactory() {
         _dalclass = SQLiteDAL.class;//Setting default DAL class

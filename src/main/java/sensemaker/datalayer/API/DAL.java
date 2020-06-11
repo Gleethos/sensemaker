@@ -7,8 +7,4 @@ public interface DAL {
     <T extends Access> T access(Class<T> type);
 
 
-
-
-
-
 }

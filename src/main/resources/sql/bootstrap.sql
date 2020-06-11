@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS EXIFs
 --<#SPLIT#>--
 CREATE TABLE EXIFs(
     id INTEGER NOT NULL PRIMARY KEY,
-    created DATE NULL,
+    shot DATE NULL,
     orientation TEXT NULL,
     created DATE NOT NULL,
     deleted Date NULL
