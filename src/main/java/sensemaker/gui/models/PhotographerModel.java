@@ -1,7 +1,13 @@
 package sensemaker.gui.models;
 
-public class PhotographerModel extends AbstractModel{
+import java.sql.Date;
 
+public class PhotographerModel extends AbstractModel<PhotographerModel>{
+
+    public PhotographerModel()
+    {
+        super(null, new Date(System.currentTimeMillis()), null);
+    }
 
 
 }

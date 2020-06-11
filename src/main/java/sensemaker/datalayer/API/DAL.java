@@ -4,7 +4,8 @@ public interface DAL {
 
     void initialize();
 
-    <T extends Access> T access(Class<T> type);
+    <T> Access<T> access(Class<T> type);
 
+    void reset();
 
 }

@@ -2,80 +2,52 @@ package sensemaker.gui.models;
 
 import java.sql.Date;
 
-public class IPTCModel extends  AbstractModel{
+public class IPTCModel extends  AbstractModel<IPTCModel>{
 
-    private int _id;
     private String _title;
     private String _description;
     private String _copyright;
     private String _keywords;
-    private Date _created;
-    private Date _deleted;
 
-    IPTCModel(int id, String title, String description, String copyright, String keyword, Date created, Date deleted)
+    public IPTCModel()
     {
-        _id=id;
-        _title=title;
-        _description=description;
-        _copyright=copyright;
-        _keywords=keyword;
-        _created=created;
-        _deleted=deleted;
-    }
-
-    public int getId() {
-        return _id;
-    }
-
-    public void setId(int id) {
-        this._id = id;
+        super(null, new Date(System.currentTimeMillis()), null);
     }
 
     public String getTitle() {
         return _title;
     }
 
-    public void setTitle(String title) {
+    public IPTCModel setTitle(String title) {
         this._title = title;
+        return this;
     }
 
     public String getDescription() {
         return _description;
     }
 
-    public void setDescription(String description) {
+    public IPTCModel setDescription(String description) {
         this._description = description;
+        return this;
     }
 
     public String getCopyright() {
         return _copyright;
     }
 
-    public void setCopyright(String copyright) {
+    public IPTCModel setCopyright(String copyright) {
         this._copyright = copyright;
+        return this;
     }
 
     public String getKeywords() {
         return _keywords;
     }
 
-    public void setKeywords(String keywords) {
+    public IPTCModel setKeywords(String keywords) {
         this._keywords = keywords;
+        return this;
     }
 
-    public Date getCreated() {
-        return _created;
-    }
-
-    public void setCreated(Date created) {
-        this._created = created;
-    }
-
-    public Date getDeleted() {
-        return _deleted;
-    }
-
-    public void setDeleted(Date deleted) {
-        this._deleted = deleted;
-    }
 }

@@ -7,6 +7,7 @@ import sensemaker.gui.models.IPTCModel;
 import sensemaker.gui.models.PhotographerModel;
 import sensemaker.gui.models.PictureModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,18 +24,31 @@ public class MockDAL implements DAL
     public void initialize() {
         _accessors.put(
                 PictureModel.class,
-                new Access<PictureModel>(){
+                new Access<PictureModel>()
+                {
+                    private int _pictureModelCounter = 1;
+                    private List<PictureModel> _pictureModelList = new ArrayList<>();
+
                     @Override public void initialize() {
 
                     }
-                    @Override public List<PictureModel> getAll() {
 
-                        return null;
+                    @Override public List<PictureModel> getAll() {
+                        return _pictureModelList;
                     }
+
                     @Override public List<PictureModel> findBy(PictureModel M) {
                         return null;
                     }
+
                     @Override public void save(PictureModel M) {
+                        if(M.getId()==null) {
+                            M.setPhotographerId(_pictureModelCounter);
+                            _pictureModelCounter ++;
+                            _pictureModelList.add(M);
+                        } else {
+                            //...
+                        }
 
                     }
 
@@ -44,7 +58,11 @@ public class MockDAL implements DAL
                 });
         _accessors.put(
                 EXIFModel.class,
-                new Access<EXIFModel>(){
+                new Access<EXIFModel>()
+                {
+                    private int _EXIFModelCounter = 1;
+                    private List<EXIFModel> _EXIFModelList = new ArrayList<>();
+
                     @Override public void initialize() {
 
                     }
@@ -120,7 +138,12 @@ public class MockDAL implements DAL
     }
 
     @Override
-    public <T extends Access> T access(Class<T> type) {
-        return (T) _accessors.get(type);
+    public <T> Access<T> access(Class<T> type) {
+        return  _accessors.get(type);
+    }
+
+    @Override
+    public void reset(){
+        initialize();
     }
 }

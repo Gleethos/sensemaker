@@ -9,7 +9,7 @@ public class BLTesting {
 
         def dal = new DALFactory().setDoMocking(true).produce()
         Gatekeeper gk = new Gatekeeper(dal)
-        gk.syncImages("")
+        gk.syncImages("images")
 
     }
 

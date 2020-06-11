@@ -137,7 +137,13 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
     }
 
     @Override
-    public <T extends Access> T access(Class<T> type) {
-        return (T) _accessors.get(type);
+    public <T> Access<T> access(Class<T> type) {
+        return  _accessors.get(type);
     }
+
+    @Override
+    public void reset() {
+        initialize();
+    }
+
 }
