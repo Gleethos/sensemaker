@@ -162,6 +162,86 @@ public class DALTesting
         ))).equals(expectedString.replace("forename:Mr., created:","forename:Mr., surname:Bean, created:"))
     }
 
+    @Test
+    void test_delete_in_SQLiteDAL_after_BL_sync()
+    {
+        def dal = new DALFactory().setDoMocking(false).produce()
+        Gatekeeper gk = new Gatekeeper(dal)
+        gk.syncImages("test_images")
+
+        String date = new Date(System.currentTimeMillis()).toString()
+
+        def stringify = { list ->
+            return list.collect {
+                it.getPictureModel().defaultInsertKeyValues(Object.class).toString() + "|" +
+                        it.getEXIFModel().defaultInsertKeyValues(Object.class).toString() + "|" +
+                        it.getIPTCModel().defaultInsertKeyValues(Object.class).toString() + "|" +
+                        it.getPhotographerModel().defaultInsertKeyValues(Object.class).toString()
+            }.join("\n")
+        }
+
+        def found = dal.access(DetailedPictureModel.class).findBy(
+                new DetailedPictureModel(
+                        new PictureModel(),
+                        new EXIFModel(),
+                        new IPTCModel(),
+                        new PhotographerModel()
+                )
+        )
+
+        def detailed = stringify(found)
+
+        //println detailed
+        assert detailed.equals(
+                "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\bang.png, EXIF_id:1, created:"+date.toString()+", id:1, IPTC_id:1, photographer_id:1]|[created:"+date.toString()+", id:1]|[created:"+date.toString()+", id:1, title:bang.png]|[forename:Mr., created:"+date.toString()+", id:1]\n" +
+                "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\beany.png, EXIF_id:2, created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[created:"+date.toString()+", id:2]|[created:"+date.toString()+", id:2, title:beany.png]|[forename:Mr., created:"+date.toString()+", id:2]\n" +
+                "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\brumm.png, EXIF_id:3, created:"+date.toString()+", id:3, IPTC_id:3, photographer_id:3]|[created:"+date.toString()+", id:3]|[created:"+date.toString()+", id:3, title:brumm.png]|[forename:Mr., created:"+date.toString()+", id:3]")
+
+        dal.access(DetailedPictureModel.class).delete(found[1])
+
+        found = dal.access(DetailedPictureModel.class).findBy(
+                new DetailedPictureModel(
+                        new PictureModel(),
+                        new EXIFModel(),
+                        new IPTCModel(),
+                        new PhotographerModel()
+                )
+        )
+        assert stringify(found).equals(
+            "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\bang.png, EXIF_id:1, created:"+date.toString()+", id:1, IPTC_id:1, photographer_id:1]|[created:"+date.toString()+", id:1]|[created:"+date.toString()+", id:1, title:bang.png]|[forename:Mr., created:"+date.toString()+", id:1]\n" +
+            "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\brumm.png, EXIF_id:3, created:"+date.toString()+", id:3, IPTC_id:3, photographer_id:3]|[created:"+date.toString()+", id:3]|[created:"+date.toString()+", id:3, title:brumm.png]|[forename:Mr., created:"+date.toString()+", id:3]")
+
+    }
+
+    @Test
+    void test_findBy_with_first_getALL_in_SQLiteDAL_after_BL_sync()
+    {
+        def dal = new DALFactory().setDoMocking(false).produce()
+        Gatekeeper gk = new Gatekeeper(dal)
+        gk.syncImages("test_images")
+
+        String date = new Date(System.currentTimeMillis()).toString()
+
+        def stringify = { list ->
+            return list.collect {
+                it.getPictureModel().defaultInsertKeyValues(Object.class).toString() + "|" +
+                        it.getEXIFModel().defaultInsertKeyValues(Object.class).toString() + "|" +
+                        it.getIPTCModel().defaultInsertKeyValues(Object.class).toString() + "|" +
+                        it.getPhotographerModel().defaultInsertKeyValues(Object.class).toString()
+            }.join("\n")
+        }
+
+        def all = dal.access(DetailedPictureModel.class).getAll()
+
+        def found = dal.access(DetailedPictureModel.class).findBy(all[1])
+
+        println stringify(all)
+        println "..."
+        println stringify(found)
+
+
+    }
+
 
 
 }

@@ -9,10 +9,7 @@ import sensemaker.gui.models.base.PictureModel;
 import sensemaker.gui.models.composits.DetailedPictureModel;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MockDAL implements DAL
 {
@@ -42,7 +39,7 @@ public class MockDAL implements DAL
                     @Override public void save(PictureModel M) {
                         if(M.getId()==null) {
                             M.setId(_pictureModelCounter);
-                            if(M.getCreated()==null) M.setCreated(new Date(System.currentTimeMillis()));
+                            if(M.getCreated()==null) M.setCreated(Date.valueOf(new java.sql.Date(Calendar.getInstance().getTime().getTime()).toString()));
                             _pictureModelCounter ++;
                             _pictureModelList.add(M);
                         } else {
@@ -71,7 +68,7 @@ public class MockDAL implements DAL
                     @Override public void save(EXIFModel M) {
                         if(M.getId()==null) {
                             M.setId(_EXIFModelCounter);
-                            if(M.getCreated()==null) M.setCreated(new Date(System.currentTimeMillis()));
+                            if(M.getCreated()==null) M.setCreated(Date.valueOf(new java.sql.Date(Calendar.getInstance().getTime().getTime()).toString()));
                             _EXIFModelCounter++;
                             _EXIFModelList.add(M);
                         } else {
@@ -103,7 +100,7 @@ public class MockDAL implements DAL
                     public void save(IPTCModel M) {
                         if(M.getId()==null) {
                             M.setId(_IPTCModelCounter);
-                            if(M.getCreated()==null) M.setCreated(new Date(System.currentTimeMillis()));
+                            if(M.getCreated()==null) M.setCreated(Date.valueOf(new java.sql.Date(Calendar.getInstance().getTime().getTime()).toString()));
                             _IPTCModelCounter++;
                             _IPTCModelList.add(M);
                         } else {
@@ -137,7 +134,7 @@ public class MockDAL implements DAL
                     public void save(PhotographerModel M) {
                         if(M.getId()==null) {
                             M.setId(_photographerModelCounter);
-                            if(M.getCreated()==null) M.setCreated(new Date(System.currentTimeMillis()));
+                            if(M.getCreated()==null) M.setCreated(Date.valueOf(new java.sql.Date(Calendar.getInstance().getTime().getTime()).toString()));
                             _photographerModelCounter++;
                             _photographerModelList.add(M);
                         } else {

@@ -150,7 +150,7 @@ public abstract class AbstractDatabaseConnection
     }
 
     protected Map<String, List<Object>> _query(String sql, List<Object> values){
-        //System.out.println(sql);
+        System.out.println(sql);
         Map<String, List<Object>> result = new HashMap<>();
         _for(
                 sql, values, // <=- Are used to build prepared statement when 'values' is not null!
@@ -170,42 +170,44 @@ public abstract class AbstractDatabaseConnection
                                 String columnValue = rs.getString(i);
                                 ResultSetMetaData rsmd = rs.getMetaData();
                                 String column_name = rsmd.getColumnName(i);
-                                if(rsmd.getColumnType(i)==java.sql.Types.ARRAY){
+                                if(rsmd.getColumnType(i)==java.sql.Types.ARRAY) {
                                     result.get(column_name).add(rs.getArray(column_name));
                                 }
-                                else if(rsmd.getColumnType(i)==java.sql.Types.BIGINT){
+                                else if(rsmd.getColumnType(i)==java.sql.Types.BIGINT) {
                                     result.get(column_name).add(rs.getInt(column_name));
                                 }
-                                else if(rsmd.getColumnType(i)==java.sql.Types.BOOLEAN){
+                                else if(rsmd.getColumnType(i)==java.sql.Types.BOOLEAN) {
                                     result.get(column_name).add(rs.getBoolean(column_name));
                                 }
-                                else if(rsmd.getColumnType(i)==java.sql.Types.BLOB){
+                                else if(rsmd.getColumnType(i)==java.sql.Types.BLOB) {
                                     result.get(column_name).add(rs.getBlob(column_name));
                                 }
-                                else if(rsmd.getColumnType(i)==java.sql.Types.DOUBLE){
+                                else if(rsmd.getColumnType(i)==java.sql.Types.DOUBLE) {
                                     result.get(column_name).add(rs.getDouble(column_name));
                                 }
-                                else if(rsmd.getColumnType(i)==java.sql.Types.FLOAT){
+                                else if(rsmd.getColumnType(i)==java.sql.Types.FLOAT) {
                                     result.get(column_name).add(rs.getFloat(column_name));
                                 }
-                                else if(rsmd.getColumnType(i)==java.sql.Types.INTEGER){
+                                else if(rsmd.getColumnType(i)==java.sql.Types.INTEGER) {
                                     result.get(column_name).add(rs.getInt(column_name));
                                 }
-                                else if(rsmd.getColumnType(i)==java.sql.Types.NVARCHAR){
+                                else if(rsmd.getColumnType(i)==java.sql.Types.NVARCHAR) {
                                     result.get(column_name).add(rs.getNString(column_name));
                                 }
-                                else if(rsmd.getColumnType(i)==java.sql.Types.VARCHAR){
+                                else if(rsmd.getColumnType(i)==java.sql.Types.VARCHAR) {
                                     result.get(column_name).add(rs.getString(column_name));
                                 }
-                                else if(rsmd.getColumnType(i)==java.sql.Types.TINYINT){
+                                else if(rsmd.getColumnType(i)==java.sql.Types.TINYINT) {
                                     result.get(column_name).add(rs.getInt(column_name));
                                 }
-                                else if(rsmd.getColumnType(i)==java.sql.Types.SMALLINT){
+                                else if(rsmd.getColumnType(i)==java.sql.Types.SMALLINT) {
                                     result.get(column_name).add(rs.getInt(column_name));
                                 }
-                                else if(rsmd.getColumnType(i)==java.sql.Types.DATE){
+                                else if(rsmd.getColumnType(i)==java.sql.Types.DATE) {
                                     String date = rs.getString(column_name);
                                     result.get(column_name).add((date==null)?null:Date.valueOf(date));
+                                    //result.get(column_name).add(rs.getDate(column_name));
+                                    //rs.getTimestamp(column_name);
                                 }
                                 else if(rsmd.getColumnType(i)==java.sql.Types.TIMESTAMP){
                                     result.get(column_name).add(rs.getTimestamp(column_name));

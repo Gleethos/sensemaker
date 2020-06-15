@@ -26,7 +26,7 @@ class ModelTesting
         Date date = new Date(System.currentTimeMillis())
         m.setCreated(date)
         map = m.generatePreparedSQLKeyValues(Date.class)
-        assert map.any {it.key.contains("pictures.created = ?") && it.value==date}
+        assert map.any {it.key.contains("DATE(pictures.created) = ?") && it.value==date}
         assert m.generatePreparedSQLKeyValues(Object.class).size()==2
         m.setEXIFId(4)
         map = m.generatePreparedSQLKeyValues(Object.class)
@@ -61,10 +61,11 @@ class ModelTesting
         DetailedPictureModel detailed = new DetailedPictureModel(picture, exif, iptc, photographer)
 
         def map = detailed.generatePreparedSQLKeyValues(Object.class)
-        assert map.toString()=="[IPTCs.keywords = ?:#Mr#Bean#Teddy, pictures.path = ?:my/awesome/path.png, EXIFs.created = ?:"+date.toString()+", EXIFs.id = ?:1, " +
+        def expected = "[IPTCs.keywords = ?:#Mr#Bean#Teddy, pictures.path = ?:my/awesome/path.png, EXIFs.id = ?:1, " +
                 "IPTCs.copyright = ?:royalty free, EXIFs.orientation = ?:Hochformat, pictures.EXIF_id = ?:1, " +
-                "IPTCs.id = ?:3, pictures.id = ?:9, IPTCs.description = ?:Pretty nice, pictures.IPTC_id = ?:3, " +
-                "EXIFs.shot = ?:"+date.toString()+", pictures.photographer_id = ?:5, IPTCs.created = ?:"+date.toString()+"]"
+                "DATE(EXIFs.created) = ?:"+date.toString()+", IPTCs.id = ?:3, pictures.id = ?:9, IPTCs.description = ?:Pretty nice, " +
+                "DATE(IPTCs.created) = ?:"+date.toString()+", pictures.IPTC_id = ?:3, EXIFs.shot = ?:"+date.toString()+", pictures.photographer_id = ?:5]"
+        assert map.toString()==expected
 
     }
 
@@ -99,7 +100,13 @@ class ModelTesting
         assert !map.toString().contains("deleted")
 
         map = detailed.generateSoftPreparedSQLKeyValues(Object.class)
-        print map
+        def expected = "[EXIFs.orientation LIKE ?:%Hochformat%, pictures.path LIKE ?:%my/awesome/path.png%, " +
+                "DATE(EXIFs.shot) = ?:"+date.toString()+", EXIFs.id = ?:1, pictures.EXIF_id = ?:1, " +
+                "DATE(EXIFs.created) = ?:"+date.toString()+", IPTCs.id = ?:3, pictures.id = ?:9, " +
+                "DATE(IPTCs.created) = ?:"+date.toString()+", pictures.IPTC_id = ?:3, IPTCs.keywords LIKE ?:%#Mr#Bean#Teddy%, " +
+                "IPTCs.copyright LIKE ?:%royalty free%, pictures.photographer_id = ?:5, IPTCs.description LIKE ?:%Pretty nice%]"
+
+        assert map.toString()==expected
 
     }
 

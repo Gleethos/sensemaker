@@ -49,8 +49,8 @@ public abstract class AbstractModel<FinalType> implements Model
     protected <T> Map<String,T> _defaultPreparedKeyValues(Class<T> type) {
         Map<String, T> map = new HashMap<>();
         if(type.isInstance(_id)) map.put(getAsTableName()+".id = ?",(T) _id);
-        if(type.isInstance(_created)) map.put(getAsTableName()+".created = ?",(T)_created);
-        if(type.isInstance(_deleted)) map.put(getAsTableName()+".deleted = ?",(T)_deleted);
+        if(type.isInstance(_created)) map.put("DATE("+getAsTableName()+".created) = ?",(T)_created);
+        if(type.isInstance(_deleted)) map.put("DATE("+getAsTableName()+".deleted) = ?",(T)_deleted);
         return map;
     }
 
@@ -61,8 +61,11 @@ public abstract class AbstractModel<FinalType> implements Model
         Map<String, T> map = generatePreparedSQLKeyValues(type);
         return map.entrySet().stream().map(
                     e -> new AbstractMap.SimpleEntry<>(
-                        e.getKey().trim().replace(getAsTableName()+".", "").replace(" = ?",""),
-                        e.getValue()
+                        e.getKey().trim()
+                                .replace(getAsTableName()+".", "")
+                                .replace(" = ?","")
+                                .replace("DATE(","").replace(")",""),
+                            (T)e.getValue().toString()
                     )
                 ).collect(Collectors.toMap(
                         Map.Entry::getKey,
@@ -79,7 +82,15 @@ public abstract class AbstractModel<FinalType> implements Model
                     new AbstractMap.SimpleEntry<>(
                         e.getKey().trim().replace(" = ?"," LIKE ?"),
                         (T)("%"+((String)e.getValue())+"%")
-                    ) : e
+                    )
+                            :
+                    (e.getValue() instanceof Date) ?
+                            new AbstractMap.SimpleEntry<>(
+                                    (!e.getKey().contains("DATE"))?"DATE("+e.getKey().trim().replace(" = ?","")+") = ?":e.getKey(),
+                                    (T)(((Date)e.getValue()).toString())
+                            )
+                            :
+                            e
         ).collect(Collectors.toMap(
                 Map.Entry::getKey,
                 Map.Entry::getValue

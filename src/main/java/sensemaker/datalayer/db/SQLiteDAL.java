@@ -23,7 +23,8 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
     }
 
     @Override
-    public void initialize() {
+    public void initialize()
+    {
         //Close DB-Connection upon System-Shutdown!
         Runtime.getRuntime().addShutdownHook( new Thread(this::_close));
         _construct("jdbc:sqlite:C:/sqlite/db/SenseMakerDB", "", "");
@@ -299,7 +300,7 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
     //---------------
 
     private String _generateSaveSQLFor(AbstractModel m){
-        if(m.getCreated()==null) m.setCreated(new Date(System.currentTimeMillis()));
+        if(m.getCreated()==null) m.setCreated(Date.valueOf(new java.sql.Date(Calendar.getInstance().getTime().getTime()).toString()));
 
         Map<String, Object> inserts = m.defaultInsertKeyValues(Object.class);
         List<String> attributes = new ArrayList<>(inserts.keySet());
@@ -340,16 +341,18 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
     {
         List maps = models.stream().map(m->m.generateSoftPreparedSQLKeyValues(Object.class)).collect(Collectors.toList());
 
-        StringBuilder joined = new StringBuilder();
-        // Joining by and : //TODO: ors too!
+        List<String> joined = new ArrayList<>();
+        // Joining by and :
 
         for(Object map : maps) {
-            joined.append(String.join(" AND ", new ArrayList<>(((Map<String, Object>) map).keySet())));
+            joined.add(String.join(" AND ", new ArrayList<>(((Map<String, Object>) map).keySet())));
             inValues.addAll(((Map<String, Object>) map).values());
         }
+        joined = joined.stream().filter(s->!s.equals("")).collect(Collectors.toList());
         // add WHERE:
-        if (!joined.toString().equals("")) return "WHERE "+joined;
-        return joined.toString();
+        String where = String.join(" AND ", joined);
+        if (!where.equals("")) return "WHERE "+where;
+        return where;
 
     }
 
