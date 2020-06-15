@@ -13,25 +13,32 @@ package sensemaker.gui.view.subview;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.input.SwipeEvent;
-import javafx.scene.input.TouchEvent;
+import javafx.scene.control.Button;
+import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+import sensemaker.gui.models.composits.DetailedPictureModel;
 import sensemaker.gui.view.interfaces.*;
 
-public class PictureView extends Pane implements IChildItem{
+public class DetailedPictureView extends Pane implements IChildItem, Initializable {
+
 
     private IParentItem _parent;
     private boolean _moveInProgress = false;
     private int _touchPointId;
     private Point2D _prevPos;
 
-    public PictureView(IParentItem parentContainer){
+    @FXML
+    Button closeBtn;
+
+    public DetailedPictureView(IParentItem parentContainer){
         super();
         _parent = parentContainer;
         FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("PictureGUI.fxml"));
@@ -42,6 +49,11 @@ public class PictureView extends Pane implements IChildItem{
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        closeBtn.setOnAction( e -> _parent.remove(this));
     }
 
     @Override
@@ -56,11 +68,12 @@ public class PictureView extends Pane implements IChildItem{
         getStyleClass().add("mainFxmlClassSelected");
     }
 
-    public void onTouchPressed(TouchEvent t) {
+    public void onTouchPressed(TouchEvent t)
+    {
         if (!_moveInProgress) {
-            if (_parent.getFocusedItem() != PictureView.this) {
+            if (_parent.getFocusedItem() != DetailedPictureView.this) {
                 _parent.unfocusItem();
-                _parent.focusItem(PictureView.this);
+                _parent.focusItem(DetailedPictureView.this);
             }
             _moveInProgress = true;
             _touchPointId = t.getTouchPoint().getId();
@@ -81,7 +94,6 @@ public class PictureView extends Pane implements IChildItem{
             //will require having another variable
             setTranslateX(getTranslateX() + translationVector[0]);
             setTranslateY(getTranslateY() + translationVector[1]);
-            //JComponent content = this.RealmNode.getContent();
             _prevPos = currPos;
         }
         t.consume();
@@ -102,6 +114,21 @@ public class PictureView extends Pane implements IChildItem{
 
     @FXML
     public void onSwipe(SwipeEvent t) {
+        t.consume();
+    }
+
+    @FXML
+    public void onDrag(MouseEvent t) {
+        //this part should be optimized in a production code but here in order to present the steps i took a more verbose approach
+        Point2D currPos = new Point2D(t.getSceneX(), t.getSceneY());
+        double[] translationVector = new double[2];
+        translationVector[0] = (_prevPos!=null)?currPos.getX() - _prevPos.getX():0;
+        translationVector[1] = (_prevPos!=null)?currPos.getY() - _prevPos.getY():0;
+        //i used this instead of setTranslate* because we don't care about the original position of the object and aggregating _translation
+        //will require having another variable
+        setTranslateX(getTranslateX() + translationVector[0]);
+        setTranslateY(getTranslateY() + translationVector[1]);
+        _prevPos = currPos;
         t.consume();
     }
 

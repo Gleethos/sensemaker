@@ -13,10 +13,12 @@ public class Environment
     private final Settings _settings;
 
     private Environment() {
+        System.setProperty("log4j.properties", String.valueOf(this.getClass().getResource("log4j.properties")));
         _settings = Settings.instance();
     }
 
-    public static Environment instance(){
+    public static Environment instance()
+    {
         Thread thread = Thread.currentThread();
         if(_instances.containsKey(thread)) return _instances.get(thread);
         else {

@@ -33,15 +33,7 @@
                 <fx:include fx:id="_pictureInspection" source="PictureInspectionGUI.fxml"/>
             </AnchorPane>
             <AnchorPane>
-                <Button mnemonicParsing="false"
-                        style="-fx-graphic: url('http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-9/24/open-file-icon.png');"
-                        text=""/>
-                <Button mnemonicParsing="false"
-                        style="-fx-graphic: url('http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-9/24/open-file-icon.png');"
-                        text=""/>
-                <Button mnemonicParsing="false"
-                        style="-fx-graphic: url('http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-9/24/open-file-icon.png');"
-                        text=""/>
+                <fx:include fx:id="_pictureList" source="PictureListGUI.fxml"/>
             </AnchorPane>
         </SplitPane>
     </center>
@@ -59,14 +51,9 @@
                 </Menu>
             </MenuBar>
             <ToolBar>
-                <Button mnemonicParsing="false"
-                        style="-fx-graphic: url('http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-9/24/open-file-icon.png');"
-                        text=""/>
-                <Button mnemonicParsing="false"
-                        style="-fx-graphic: url('http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-7/24/Save-icon.png');"
-                        text=""/>
+                <fx:include fx:id="_search" source="SearchGUI.fxml"/>
             </ToolBar>
-            <fx:include fx:id="_search" source="SearchGUI.fxml"/>
+
         </VBox>
 
     </top>

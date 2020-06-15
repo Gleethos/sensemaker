@@ -6,9 +6,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="PictureListView"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="sensemaker.gui.view.PictureListView"
+>
+    <FlowPane fx:id="imageHolder">
+
+    </FlowPane>
+    <Button mnemonicParsing="false"
+            style="-fx-graphic: url('http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-9/24/open-file-icon.png');"
+            text=""/>
+
 
 </AnchorPane>

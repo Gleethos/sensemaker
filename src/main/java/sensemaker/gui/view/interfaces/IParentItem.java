@@ -14,6 +14,8 @@ package sensemaker.gui.view.interfaces;
 
 public interface IParentItem {
 
+    void remove(IChildItem child);
+
     void focusItem(IChildItem rect);
 
     boolean isFocusing();

@@ -3,20 +3,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sensemaker.gui.view.SearchView"
+<AnchorPane
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="sensemaker.gui.view.SearchView"
 >
     <HBox>
-        <TextField fx:id="nameSearchTextField" promptText="Search">
-            Image Name
+        <TextField fx:id="softSearchTextField" promptText="Any">
+
         </TextField>
-        <TextField fx:id="dateSearchTextField" promptText="Date">
-            Date
-        </TextField>
-        <TextField fx:id="creatorSearchTextField" promptText="Creator">
-            Creator
-        </TextField>
+        <Button
+                fx:id="searchButton"
+                mnemonicParsing="false"
+                style="
+                    -fx-background-image: url('http://icons.iconarchive.com/icons/praveen/minimal-outline/128/search-icon.png');
+                    -fx-background-size: 20px 20px;
+                    -fx-background-repeat: no-repeat;
+                    -fx-background-position: center;
+                    -fx-pref-width: 32px;
+                "
+                text="?"
+        />
         <Text fx:id="displayText">
             ...
         </Text>

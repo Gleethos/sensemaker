@@ -1,17 +1,19 @@
 package sensemaker.gui.view;
 
+import javafx.beans.property.Property;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import org.apache.log4j.Logger;
+import sensemaker.gui.presentation.AbstractPresentation;
 
-import java.util.logging.Logger;
 
 public abstract class AbstractView<PresentationType>{
 
-    protected static Logger _log = Logger.getLogger(AbstractView.class.getName());
+    protected static Logger _log = org.apache.log4j.Logger.getLogger(AbstractView.class);
 
     protected abstract void _bind(PresentationType presentation);
 
@@ -27,6 +29,7 @@ public abstract class AbstractView<PresentationType>{
 
     private StringProperty _findStringProperty(Object o)
     {
+        if(o instanceof StringProperty) return (StringProperty)o;
         if(o instanceof TextField) return ((TextField)o).textProperty();
         else if(o instanceof Text) return ((Text)o).textProperty();
         return null;

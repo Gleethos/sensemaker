@@ -1,5 +1,6 @@
 package sensemaker.gui.models.composits;
 
+import sensemaker.gui.models.AbstractSearchableModel;
 import sensemaker.gui.models.Model;
 import sensemaker.gui.models.base.EXIFModel;
 import sensemaker.gui.models.base.IPTCModel;
@@ -9,14 +10,14 @@ import sensemaker.gui.models.base.PictureModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DetailedPictureModel implements Model
+public class DetailedPictureModel extends AbstractSearchableModel<DetailedPictureModel>
 {
     private PictureModel _pictureModel;
     private EXIFModel _exifModel;
     private IPTCModel _iptcModel;
     private PhotographerModel _photographerModel;
 
-    public DetailedPictureModel(
+    public DetailedPictureModel (
             PictureModel pictureModel,
             EXIFModel exifModel,
             IPTCModel iptcModel,

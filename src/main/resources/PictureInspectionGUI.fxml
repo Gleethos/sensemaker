@@ -23,14 +23,14 @@
         >
             <Button
                     id="addElementBtn"
-                    fx:id="resetSceneBtn"
+                    fx:id="addElementBtn"
                     mnemonicParsing="false"
                     onAction="#handleResetScene"
                     text="Reset scene"
             />
             <Button
                     id="resetSceneBtn"
-                    fx:id="addElementBtn"
+                    fx:id="resetSceneBtn"
                     mnemonicParsing="false"
                     onAction="#handleAddElement"
                     text="Add element"

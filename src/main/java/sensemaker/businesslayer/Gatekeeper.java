@@ -5,6 +5,7 @@ import sensemaker.gui.models.base.EXIFModel;
 import sensemaker.gui.models.base.IPTCModel;
 import sensemaker.gui.models.base.PhotographerModel;
 import sensemaker.gui.models.base.PictureModel;
+import sensemaker.gui.models.composits.DetailedPictureModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,39 +66,9 @@ public class Gatekeeper {
         return null;
     }
 
-    public void search(PictureModel picture, EXIFModel exif, IPTCModel iptc) {
-
-        List<PictureModel> pictures =  _dal.access(PictureModel.class).findBy(picture);
-        List<EXIFModel> exifs = _dal.access(EXIFModel.class).findBy(exif);
-        List<IPTCModel> iptcs = _dal.access(IPTCModel.class).findBy(iptc);
-
-        if(pictures.isEmpty()) pictures.add(new PictureModel());
-        if(exifs.isEmpty()) exifs.add(new EXIFModel());
-        if(iptcs.isEmpty()) iptcs.add(new IPTCModel());
-
-        for (PictureModel foundPicture : pictures) {
-            for (EXIFModel foundExif : exifs) {
-                for (IPTCModel foundIptc : iptcs) {
-                    Integer eid = foundExif.getId();
-                    Integer iid = foundIptc.getId();
-                    if(
-                            (eid==null || foundPicture.getEXIFId().equals(eid))
-                            &&
-                            (iid==null || foundPicture.getIPTCId().equals(iid))
-                    ){
-                        if (foundPicture.getId()==null) { // EXIF & IPTC data must be used for picture search now
-                            if(iid!=null) {
-                                foundPicture.setIPTCId(iid);
-                                _dal.access(PictureModel.class).findBy(foundPicture);
-                            } else if (eid!=null) {
-
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
+    public List<DetailedPictureModel> searchForPictures(DetailedPictureModel model)
+    {
+        return _dal.access(DetailedPictureModel.class).findBy(model);
     }
 
 

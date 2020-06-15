@@ -49,7 +49,7 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
 
                     @Override public List<PictureModel> findBy(PictureModel M) {
                         List<Object> prepValues = new ArrayList<>();
-                        String joinedWhere = _genWhere(List.of(M) ,prepValues);
+                        String joinedWhere = _genWhere(List.of(M) ,prepValues, " AND ");
                         return _getAll(joinedWhere, prepValues,
                                 get -> new PictureModel()
                                         .setId((Integer) get.apply("id"))
@@ -86,7 +86,7 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
                     }
                     @Override public List<EXIFModel> findBy(EXIFModel M) {
                         List<Object> prepValues = new ArrayList<>();
-                        String joinedWhere = _genWhere(List.of(M) ,prepValues);
+                        String joinedWhere = _genWhere(List.of(M) ,prepValues, " AND ");
                         return _getAll(joinedWhere, prepValues,
                                 get -> new EXIFModel()
                                         .setId((Integer) get.apply("id"))
@@ -125,7 +125,7 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
             @Override
             public List<IPTCModel> findBy(IPTCModel M) {
                 List<Object> prepValues = new ArrayList<>();
-                String joinedWhere = _genWhere(List.of(M) ,prepValues);
+                String joinedWhere = _genWhere(List.of(M) ,prepValues, " AND ");
                 return _getAll(joinedWhere, prepValues,
                         get -> new IPTCModel()
                                 .setId((Integer) get.apply("id"))
@@ -168,7 +168,7 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
                     @Override
                     public List<PhotographerModel> findBy(PhotographerModel M) {
                         List<Object> prepValues = new ArrayList<>();
-                        String joinedWhere = _genWhere(List.of(M) ,prepValues);
+                        String joinedWhere = _genWhere(List.of(M) ,prepValues, " AND ");
                         return _getAll(joinedWhere, prepValues,
                                 get -> new PhotographerModel()
                                     .setId((Integer) get.apply("id"))
@@ -264,7 +264,9 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
                                    M.getPhotographerModel(),
                                    M.getIPTCModel(),
                                    M.getPictureModel()
-                           ) ,prepValues
+                           ),
+                           prepValues,
+                           (M.isFoundSoftly())?" OR ":" AND "
                    );
                    return _getAllWhere(joinedWhere, prepValues);
                }
@@ -337,20 +339,20 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
         return list;
     }
 
-    private String _genWhere(List<AbstractModel> models, List<Object> inValues)
+    private String _genWhere(List<AbstractModel> models, List<Object> inValues, String outerJunctor)
     {
         List maps = models.stream().map(m->m.generateSoftPreparedSQLKeyValues(Object.class)).collect(Collectors.toList());
 
         List<String> joined = new ArrayList<>();
-        // Joining by and :
-
-        for(Object map : maps) {
-            joined.add(String.join(" AND ", new ArrayList<>(((Map<String, Object>) map).keySet())));
-            inValues.addAll(((Map<String, Object>) map).values());
+        // Joining by and/or :
+        for(int i=0; i<maps.size(); i++) {
+            String delimiter = (models.get(i).isFoundSoftly())?" OR ":" AND ";
+            joined.add(String.join(delimiter, new ArrayList<>(((Map<String, Object>) maps.get(i)).keySet())));
+            inValues.addAll(((Map<String, Object>) maps.get(i)).values());
         }
         joined = joined.stream().filter(s->!s.equals("")).collect(Collectors.toList());
         // add WHERE:
-        String where = String.join(" AND ", joined);
+        String where = String.join(outerJunctor, joined);
         if (!where.equals("")) return "WHERE "+where;
         return where;
 

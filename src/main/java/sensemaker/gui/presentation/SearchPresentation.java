@@ -1,94 +1,96 @@
 package sensemaker.gui.presentation;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import sensemaker.gui.models.base.EXIFModel;
 import sensemaker.gui.models.base.IPTCModel;
 import sensemaker.gui.models.base.PhotographerModel;
 import sensemaker.gui.models.base.PictureModel;
-import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import sensemaker.gui.models.composits.DetailedPictureModel;
 
-public class SearchPresentation extends AbstractPresentation<PictureModel>
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class SearchPresentation extends AbstractPresentation<DetailedPictureModel>
 {
 
+    private StringProperty displayProperty;
+    private StringProperty softSearchProperty;
 
+    DetailedPictureModel _detailedModel; // Dataholder for search queries!
 
-    private StringBinding displayNameProperty;
+    private PictureListPresentation _listPresentation;
 
-    private IntegerProperty id;
-    private StringProperty title;
+    public SearchPresentation()
+    {
+         _detailedModel = new DetailedPictureModel(
+                 new PictureModel().setIsFoundSoftly(true),
+                 new EXIFModel().setIsFoundSoftly(true),
+                 new IPTCModel().setIsFoundSoftly(true),
+                 new PhotographerModel().setIsFoundSoftly(true)
+         ).setIsFoundSoftly(true); //:= Soft searching! :)
 
-    private PictureModel _pictureModel;
-    private EXIFModel _EXIFModel;
-    private IPTCModel _IPTCModel;
-    private PhotographerModel _photographerModel;
+        softSearchProperty = new SimpleStringProperty("INI VALUE");
+        displayProperty = new SimpleStringProperty("INI VALUE");
 
-    public SearchPresentation(){
-        PictureModel model = new PictureModel();
-        _EXIFModel = new EXIFModel();
-        _IPTCModel = new IPTCModel();
+        refresh(_detailedModel);
+    }
 
-        title = new SimpleStringProperty("test 1");
-        id = new SimpleIntegerProperty(-1);
-        refresh(model);
+    public void setPictureListPresentation(PictureListPresentation listPresentation){
+        _listPresentation = listPresentation;
     }
 
     public void search(){
-        _getDAL().access(PictureModel.class).findBy(_pictureModel);
+        String key = softSearchProperty.getValue();
+        _detailedModel.getIPTCModel().setKeywords(key);
+        _detailedModel.getIPTCModel().setTitle(key);
+        _detailedModel.getIPTCModel().setCopyright(key);
+        _detailedModel.getIPTCModel().setDescription(key);
+        _detailedModel.getEXIFModel().setOrientation(key);
+        _detailedModel.getPhotographerModel().setForename(key);
+        _detailedModel.getPhotographerModel().setSurname(key);
+        _detailedModel.getPictureModel().setPath(key);
+        List<DetailedPictureModel> found = _business().searchForPictures(_detailedModel);
+
+        _listPresentation.refresh(
+                found.stream().map(d->d.getPictureModel()).collect(Collectors.toList())
+        );
+
     }
 
     @Override
-    public void refresh(PictureModel model) {
-        _pictureModel = model;
-        title.setValue(model.getPath());
-        id.setValue(model.getId());
-        displayNameProperty = new StringBinding() {
-            @Override
-            protected String computeValue() {
-                return String.format("%s %s", getPath(), getId()).trim();
-            }
-        };
+    public void refresh(DetailedPictureModel model)
+    {
+        _detailedModel = model;
+        softSearchProperty.setValue("Title: "+model.getIPTCModel().getTitle());
+        //softSearchProperty.addListener(s -> {
+        //    System.out.println("Searching");
+        //    displayProperty.setValue(softSearchProperty.getValue());
+        //});
     }
 
     @Override
-    public void applyChanges(PictureModel model) {
-        model.setId(_pictureModel.getId());
-        model.setPath(_pictureModel.getPath());
+    public void applyChanges(DetailedPictureModel model) {
+
     }
 
-    public String getPath() {
-        return _pictureModel.getPath() != null ? _pictureModel.getPath() : "";
+    // GETTER:
+
+
+    public String getDisplayProperty() {
+        return displayProperty.get();
     }
 
-    public StringProperty titleProperty() {
-        return title;
+    public StringProperty displayProperty() {
+        return displayProperty;
     }
 
-    public void setTitle(String title) {
-        _IPTCModel.setTitle(title);
+    public String getSoftSearchProperty() {
+        return softSearchProperty.get();
     }
 
-    public int getId() {
-        return _pictureModel.getId();
+    public StringProperty softSearchProperty() {
+        return softSearchProperty;
     }
-
-    public IntegerProperty idProperty() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this._pictureModel.setId(id);
-    }
-
-    public String getDisplayNameProperty() {
-        return displayNameProperty.get();
-    }
-
-    public StringBinding displayNamePropertyProperty() {
-        return displayNameProperty;
-    }
-
 
 }

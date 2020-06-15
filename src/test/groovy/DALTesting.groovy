@@ -214,7 +214,7 @@ public class DALTesting
     }
 
     @Test
-    void test_findBy_with_first_getALL_in_SQLiteDAL_after_BL_sync()
+    void test_findBy_with_second_getALL_in_SQLiteDAL_after_BL_sync()
     {
         def dal = new DALFactory().setDoMocking(false).produce()
         Gatekeeper gk = new Gatekeeper(dal)
@@ -232,16 +232,85 @@ public class DALTesting
         }
 
         def all = dal.access(DetailedPictureModel.class).getAll()
-
         def found = dal.access(DetailedPictureModel.class).findBy(all[1])
 
-        println stringify(all)
-        println "..."
-        println stringify(found)
+        assert  found.size()==1
+        assert stringify(all).contains(stringify(found))
+        assert stringify(found)==stringify([all[1]])
+        assert stringify(found)=="[path:D:\\development\\java\\studium\\sensemaker\\test_images\\beany.png, EXIF_id:2, " +
+                "created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[" +
+                "created:"+date.toString()+", id:2]|[created:"+date.toString()+", id:2, " +
+                "title:beany.png]|[forename:Mr., created:"+date.toString()+", id:2]"
+    }
+
+
+    @Test
+    void test_soft_findBy_after_BL_sync()
+    {
+        def dal = new DALFactory().setDoMocking(false).produce()
+        Gatekeeper gk = new Gatekeeper(dal)
+        gk.syncImages("test_images")
+
+        String date = new Date(System.currentTimeMillis()).toString()
+
+        def stringify = { list ->
+            return list.collect {
+                it.getPictureModel().defaultInsertKeyValues(Object.class).toString() + "|" +
+                        it.getEXIFModel().defaultInsertKeyValues(Object.class).toString() + "|" +
+                        it.getIPTCModel().defaultInsertKeyValues(Object.class).toString() + "|" +
+                        it.getPhotographerModel().defaultInsertKeyValues(Object.class).toString()
+            }.join("\n")
+        }
+        //Search parameter ONLY in IPTC
+        def model = new DetailedPictureModel(
+                new PictureModel(),
+                new EXIFModel(),
+                new IPTCModel().setTitle("bea").setCopyright("whatever"),
+                new PhotographerModel()
+        )
+        // By default every search is "hard"
+        def found = dal.access(DetailedPictureModel.class).findBy(model)
+
+        // "bea" and "whatever" are queried by "AND" by default: ->No result!
+        assert found.isEmpty()
+
+        // Setting search to "Soft" (OR search)
+        model.setIsFoundSoftly(false)
+        model.getPhotographerModel().setIsFoundSoftly(true)
+        model.getEXIFModel().setIsFoundSoftly(true)
+        model.getIPTCModel().setIsFoundSoftly(true)
+        model.getPictureModel().setIsFoundSoftly(true)
+
+        found = dal.access(DetailedPictureModel.class).findBy(model)
+
+        assert found.size()==1
+        assert stringify(found)=="[path:D:\\development\\java\\studium\\sensemaker\\test_images\\beany.png, EXIF_id:2, " +
+                "created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[" +
+                "created:"+date.toString()+", id:2]|[created:"+date.toString()+", id:2, " +
+                "title:beany.png]|[forename:Mr., created:"+date.toString()+", id:2]"
+
+        // Adding search parameter in a different sub-model than before:
+        model.getEXIFModel().setOrientation("Some orientation")
+
+        found = dal.access(DetailedPictureModel.class).findBy(model)
+
+        // Nothing because super-mode (detailed) is still set to "hard"-search
+        assert found.isEmpty()
+
+        // Let's change this:
+        model.setIsFoundSoftly(true)
+
+        found = dal.access(DetailedPictureModel.class).findBy(model)
+
+        // And now it should have worked again:
+        assert found.size()==1
+        assert stringify(found)=="[path:D:\\development\\java\\studium\\sensemaker\\test_images\\beany.png, EXIF_id:2, " +
+                "created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[" +
+                "created:"+date.toString()+", id:2]|[created:"+date.toString()+", id:2, " +
+                "title:beany.png]|[forename:Mr., created:"+date.toString()+", id:2]"
 
 
     }
-
 
 
 }

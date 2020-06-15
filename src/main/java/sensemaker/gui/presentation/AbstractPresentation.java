@@ -1,22 +1,26 @@
 package sensemaker.gui.presentation;
 
+import org.apache.log4j.Logger;
+import sensemaker.businesslayer.Gatekeeper;
 import sensemaker.datalayer.API.DAL;
 import sensemaker.datalayer.assembly.DALFactory;
+import sensemaker.gui.view.AbstractView;
 
 /**
  *
  */
 public abstract class AbstractPresentation<ModelType>
 {
-
-    private static DAL _dal;
+    protected static Logger _log = Logger.getLogger(AbstractPresentation.class);
+    private static Gatekeeper _business;
     static
     {
-        _dal = new DALFactory().setDoMocking(false).produce();
+        _business = new Gatekeeper(new DALFactory().setDoMocking(false).produce());
+        _business.syncImages("images");
     }
 
-    protected DAL _getDAL(){
-        return _dal;
+    protected Gatekeeper _business(){
+        return _business;
     }
 
     public abstract void refresh(ModelType model);

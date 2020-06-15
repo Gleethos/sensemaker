@@ -19,6 +19,7 @@
         onTouchMoved="#onTouchMoved"
         onTouchPressed="#onTouchPressed"
         onTouchReleased="#onTouchReleased"
+        onMouseDragged="#onDrag"
         styleClass="mainFxmlClassUnselected"
         xmlns:fx="http://javafx.com/fxml"
 
@@ -32,13 +33,16 @@
         </padding>
         <top>
             <HBox
-                    fx:id="buttons"
+                    fx:id="picture_buttons"
                     fillHeight="true"
             >
-                <padding>
-                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
-                </padding>
-                <Button id="addElementBtn" fx:id="resetSceneBtn" mnemonicParsing="false" text="Close"/>
+                <padding><Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/></padding>
+                <Button
+                    id="closeBtn"
+                    fx:id="closeBtn"
+                    mnemonicParsing="false"
+                    text="Close"
+                />
 
             </HBox>
         </top>

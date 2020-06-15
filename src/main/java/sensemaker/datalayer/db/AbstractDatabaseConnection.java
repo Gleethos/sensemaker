@@ -150,7 +150,7 @@ public abstract class AbstractDatabaseConnection
     }
 
     protected Map<String, List<Object>> _query(String sql, List<Object> values){
-        System.out.println(sql);
+        //System.out.println(sql);
         Map<String, List<Object>> result = new HashMap<>();
         _for(
                 sql, values, // <=- Are used to build prepared statement when 'values' is not null!

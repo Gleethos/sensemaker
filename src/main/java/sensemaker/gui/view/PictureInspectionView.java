@@ -11,7 +11,9 @@ Unless otherwise agreed by Intel in writing, you may not remove or alter this no
 */
 package sensemaker.gui.view;
 
-import sensemaker.gui.view.subview.PictureView;
+import javafx.event.EventHandler;
+import javafx.scene.input.*;
+import sensemaker.gui.view.subview.DetailedPictureView;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,10 +24,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.RotateEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.input.SwipeEvent;
-import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -69,7 +67,7 @@ public class PictureInspectionView extends AbstractView<PictureInspectionView> i
     @FXML
     private void handleAddElement(ActionEvent event) {
 
-        PictureView elem = new PictureView(this); // Todo: Add PictureModel!
+        DetailedPictureView elem = new DetailedPictureView(this); // Todo: Add PictureModel!
 
         elem.setTranslateX(touchPane.getWidth() / 8.0);
         elem.setTranslateY(touchPane.getHeight() / 4.0);
@@ -77,6 +75,13 @@ public class PictureInspectionView extends AbstractView<PictureInspectionView> i
         elem.setScaleY(0.5);
         touchPane.getChildren().remove(buttons);
         touchPane.getChildren().add(elem);
+        touchPane.getChildren().add(buttons);
+    }
+
+    @Override
+    public void remove(IChildItem child) {
+        touchPane.getChildren().remove(buttons);
+        touchPane.getChildren().remove(child);
         touchPane.getChildren().add(buttons);
     }
 
@@ -91,6 +96,19 @@ public class PictureInspectionView extends AbstractView<PictureInspectionView> i
             }
         });
         //_instance = this;
+        touchPane.setOnDragOver(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                /* data is dragged over the target */
+                /* accept it only if it is not dragged from the same node
+                 * and if it has a string data */
+                if (event.getGestureSource() != touchPane && event.getDragboard().hasString()) {
+                    /* allow for both copying and moving, whatever user chooses */
+                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                }
+
+                event.consume();
+            }
+        });
     }
 
     @Override

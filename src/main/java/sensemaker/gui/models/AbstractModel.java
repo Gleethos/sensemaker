@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class AbstractModel<FinalType> implements Model
+public abstract class AbstractModel<FinalType> extends AbstractSearchableModel<FinalType>
 {
     private Integer _id = null;
     private Date _created = null;

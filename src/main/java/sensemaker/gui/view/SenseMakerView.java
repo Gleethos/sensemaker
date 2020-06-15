@@ -13,9 +13,10 @@ public class SenseMakerView extends AbstractView<SenseMakerPresentation> impleme
 
     @FXML
     private PictureInspectionView _pictureInspectionController;
-
     @FXML
     private SearchView _searchController;
+    @FXML
+    private PictureListView _pictureListController;
 
     @FXML
     public BorderPane root;
@@ -27,7 +28,12 @@ public class SenseMakerView extends AbstractView<SenseMakerPresentation> impleme
     {
         _presentation = new SenseMakerPresentation();
         assert _pictureInspectionController != null;
-        assert _searchController !=null;
+        assert _searchController != null;
+        assert _pictureListController != null;
+        // Wire search and picture list together:
+        _searchController.setPictureListPresentation(
+                _pictureListController.getPresentation()
+        );
     }
 
     @Override
