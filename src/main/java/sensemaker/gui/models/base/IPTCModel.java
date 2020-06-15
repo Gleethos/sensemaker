@@ -1,8 +1,11 @@
-package sensemaker.gui.models;
+package sensemaker.gui.models.base;
+
+import sensemaker.gui.models.AbstractModel;
 
 import java.sql.Date;
+import java.util.Map;
 
-public class IPTCModel extends  AbstractModel<IPTCModel>{
+public class IPTCModel extends AbstractModel<IPTCModel> {
 
     private String _title;
     private String _description;
@@ -11,7 +14,7 @@ public class IPTCModel extends  AbstractModel<IPTCModel>{
 
     public IPTCModel()
     {
-        super(null, new Date(System.currentTimeMillis()), null);
+        super(null, null, null);
     }
 
     public String getTitle() {
@@ -50,4 +53,20 @@ public class IPTCModel extends  AbstractModel<IPTCModel>{
         return this;
     }
 
+    // SQL :
+
+    @Override
+    public <T> Map<String,T> generatePreparedSQLKeyValues(Class<T> type) {
+        Map<String,T> map = _defaultPreparedKeyValues(type);
+        if(type.isInstance(_copyright)) map.put(getAsTableName()+".copyright = ?",(T) _copyright);
+        if(type.isInstance(_description)) map.put(getAsTableName()+".description = ?",(T) _description);
+        if(type.isInstance(_keywords)) map.put(getAsTableName()+".keywords = ?",(T)_keywords);
+        if(type.isInstance(_title)) map.put(getAsTableName()+".title = ?",(T)_title);
+        return map;
+    }
+
+    @Override
+    public String getAsTableName() {
+        return "IPTCs";
+    }
 }

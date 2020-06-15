@@ -47,7 +47,7 @@
                 <Tab fx:id="tab1" text="Image">
                 </Tab>
 
-                <Tab fx:id="tab2" text="Properties">
+                <Tab fx:id="tab2" text="IPTC">
                     <VBox>
                         <TextField fx:id="searchTextField" promptText="Date">
                             Date
@@ -60,7 +60,23 @@
                         </TextField>
                     </VBox>
                 </Tab>
-
+                <Tab fx:id="tab3" text="EXIF">
+                    <VBox>
+                        <TextField promptText="Date">
+                            Date
+                        </TextField>
+                    </VBox>
+                </Tab>
+                <Tab fx:id="tab4" text="Creator">
+                    <VBox>
+                        <TextField promptText="Forename">
+                            Name
+                        </TextField>
+                        <TextField promptText="Forename">
+                            Surname
+                        </TextField>
+                    </VBox>
+                </Tab>
             </TabPane>
         </center>
 

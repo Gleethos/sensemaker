@@ -18,10 +18,7 @@
             Creator
         </TextField>
         <Text fx:id="displayText">
-            Binding test...
+            ...
         </Text>
-        <TextField text = "${controller.testText}">
-            fxml binding test...
-        </TextField>
     </HBox>
 </AnchorPane>

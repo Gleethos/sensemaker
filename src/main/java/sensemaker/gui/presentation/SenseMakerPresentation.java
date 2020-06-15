@@ -1,24 +1,13 @@
 package sensemaker.gui.presentation;
 
-import sensemaker.gui.models.SenseMakerModel;
+import sensemaker.gui.models.base.SenseMakerModel;
 
-public class SenseMakerPresentation extends  AbstractPresentation<SenseMakerModel> {
-
-    private static SenseMakerPresentation _instance = new SenseMakerPresentation();
+public class SenseMakerPresentation extends AbstractPresentation<SenseMakerModel> {
 
     private SenseMakerModel _model;
 
-    // Children:
-
-    private SearchPresentation _search;
-
-
-    private SenseMakerPresentation(){
-        _model = SenseMakerModel.instance();
-    }
-
-    public static SenseMakerPresentation instance(){
-        return _instance;
+    public SenseMakerPresentation(){
+        _model = new SenseMakerModel();
     }
 
     @Override

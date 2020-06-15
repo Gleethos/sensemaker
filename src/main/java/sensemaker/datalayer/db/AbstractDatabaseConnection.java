@@ -6,13 +6,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
-public abstract class AbstractDatabaseConnection {
+public abstract class AbstractDatabaseConnection
+{
+
+    protected static Logger _log = Logger.getLogger(AbstractDatabaseConnection.class.getName());
 
     /**
      * Connection settings: URL, User, Password!
@@ -21,23 +26,29 @@ public abstract class AbstractDatabaseConnection {
 
     private Connection _connection;
 
-    protected void _construct(String url, String name, String password){
+    private static Map<String, Connection> _$cache = new HashMap<>();
+
+    protected void _construct(String url, String name, String password)
+    {
+        Connection conn = _$cache.get(url+"|"+name+"|"+password);
+        _connection = conn;
+        if(conn!=null) return;
+
         _url = url;
         _user = name;
         _pwd = password;
 
-        Connection conn = null;
         if(_user.equals("")||_pwd.equals("")){
             try {
                 conn = DriverManager.getConnection(_url);
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                _log.warning(e.getMessage());
             }
         } else {
             try {
                 conn = DriverManager.getConnection(_url, _user, _pwd);
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                _log.warning(e.getMessage());
             }
         }
         if (conn != null) {
@@ -48,6 +59,7 @@ public abstract class AbstractDatabaseConnection {
             }
 
         }
+        _$cache.put(url+"|"+name+"|"+password, conn);
         _connection = conn;
     }
     
@@ -78,7 +90,7 @@ public abstract class AbstractDatabaseConnection {
         return names.toArray(new String[0]);
     }
 
-    protected Map<String, String[]> _tablesSpace(){
+    public Map<String, String[]> tablesSpace(){
         String sql = "SELECT * FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%';";
         Map<String, String[]> space = new HashMap<>();
         _for(sql, null, rs -> {
@@ -98,24 +110,50 @@ public abstract class AbstractDatabaseConnection {
     }
 
     protected void _for(String sql, Consumer<ResultSet> start, Consumer<ResultSet> each){
-        try {
-            Statement stmt = _connection.createStatement();
-            try {
-                ResultSet rs = stmt.executeQuery(sql);// loop through the result set
-                if(start!=null) start.accept(rs);
-                if(each!=null) do each.accept(rs); while(rs.next());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        _for(sql, null, start, each);
     }
 
-    protected Map<String, List> _query(String sql){
-        Map<String, List> result = new HashMap<>();
+    protected void _for(String sql, List<Object> values, Consumer<ResultSet> start, Consumer<ResultSet> each){
+        if (values!=null && !values.isEmpty()){
+            try {
+                PreparedStatement pstmt = _newPreparedStatement(sql, values);
+                try {
+                    ResultSet rs = pstmt.executeQuery();// loop through the result set
+                    if(start!=null) start.accept(rs);
+                    if(each!=null) do each.accept(rs); while(rs.next());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } catch (SQLException e) {
+                _log.warning(e.getMessage());
+            }
+        } else {
+            try {
+                Statement stmt = _connection.createStatement();
+                try {
+                    ResultSet rs = stmt.executeQuery(sql);// loop through the result set
+                    if(start!=null) start.accept(rs);
+                    if(each!=null) do each.accept(rs); while(rs.next());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } catch (SQLException e) {
+                _log.warning(e.getMessage());
+            }
+        }
+
+
+    }
+
+    protected Map<String, List<Object>> _query(String sql) {
+        return _query(sql, null);
+    }
+
+    protected Map<String, List<Object>> _query(String sql, List<Object> values){
+        //System.out.println(sql);
+        Map<String, List<Object>> result = new HashMap<>();
         _for(
-                sql,
+                sql, values, // <=- Are used to build prepared statement when 'values' is not null!
                 rs -> {
                     try {
                         ResultSetMetaData rsmd = rs.getMetaData();
@@ -166,7 +204,8 @@ public abstract class AbstractDatabaseConnection {
                                     result.get(column_name).add(rs.getInt(column_name));
                                 }
                                 else if(rsmd.getColumnType(i)==java.sql.Types.DATE){
-                                    result.get(column_name).add(rs.getDate(column_name));
+                                    String date = rs.getString(column_name);
+                                    result.get(column_name).add((date==null)?null:Date.valueOf(date));
                                 }
                                 else if(rsmd.getColumnType(i)==java.sql.Types.TIMESTAMP){
                                     result.get(column_name).add(rs.getTimestamp(column_name));
@@ -182,6 +221,9 @@ public abstract class AbstractDatabaseConnection {
         return result;
     }
 
+    public int _lastInsertID(){
+        return (Integer)_query("SELECT last_insert_rowid()").get("last_insert_rowid()").get(0);
+    }
 
     /**
      * Defines and executes a SELECT * FROM on a connection.
@@ -258,6 +300,16 @@ public abstract class AbstractDatabaseConnection {
                 fileIn.close();
         }
         return fileData;
+    }
+
+    private PreparedStatement _newPreparedStatement(String sql, List<Object> values) throws SQLException {
+        PreparedStatement pstmt = _connection.prepareStatement(sql);
+        if(values!=null) {
+            for(int i=0; i<values.size(); i++){
+                pstmt.setObject(i+1, values.get(i));
+            }
+        }
+        return pstmt;
     }
 
 }

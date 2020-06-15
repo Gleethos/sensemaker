@@ -8,36 +8,36 @@ DROP TABLE IF EXISTS IPTCs;
 DROP TABLE IF EXISTS EXIFs
 --<#SPLIT#>--
 CREATE TABLE EXIFs(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     shot DATE NULL,
     orientation TEXT NULL,
     created DATE NOT NULL,
-    deleted Date NULL
+    deleted DATE NULL
 );
 --<#SPLIT#>--
 CREATE TABLE IPTCs(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     title TEXT NULL,
     description TEXT NULL,
     copyright TEXT NULL,
     keywords TEXT NULL,
     created DATE NOT NULL,
-    deleted Date NULL
+    deleted DATE NULL
 );
 --<#SPLIT#>--
 CREATE TABLE photographers(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     forename TEXT NOT NULL,
     surname TEXT NULL,
     created DATE NOT NULL,
-    deleted Date NULL
+    deleted DATE NULL
 );
 --<#SPLIT#>--
 CREATE TABLE pictures(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     path TEXT NULL,
     created DATE NOT NULL,
-    deleted Date NULL,
+    deleted DATE NULL,
     EXIF_id INTEGER NULL,
     IPTC_id INTEGER NULL,
     photographer_id INTEGER NULL,

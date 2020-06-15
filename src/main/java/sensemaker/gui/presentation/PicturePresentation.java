@@ -1,8 +1,8 @@
 package sensemaker.gui.presentation;
 
-import sensemaker.gui.models.PictureModel;
+import sensemaker.gui.models.base.PictureModel;
 
-public class PicturePresentation  extends AbstractPresentation<PictureModel>{
+public class PicturePresentation extends AbstractPresentation<PictureModel>{
 
     private PictureModel _model;
 

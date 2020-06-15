@@ -1,12 +1,15 @@
 package sensemaker.gui.view;
 
 import javafx.beans.property.StringProperty;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.util.logging.Logger;
 
-public abstract class AbstractView<PresentationType> {
+public abstract class AbstractView<PresentationType>{
 
     protected static Logger _log = Logger.getLogger(AbstractView.class.getName());
 
@@ -22,11 +25,11 @@ public abstract class AbstractView<PresentationType> {
         }
     }
 
-    private StringProperty _findStringProperty(Object o){
+    private StringProperty _findStringProperty(Object o)
+    {
         if(o instanceof TextField) return ((TextField)o).textProperty();
         else if(o instanceof Text) return ((Text)o).textProperty();
         return null;
     }
-
 
 }

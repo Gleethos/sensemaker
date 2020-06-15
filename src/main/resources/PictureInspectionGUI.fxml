@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+    <AnchorPane
+        xmlns:fx="http://javafx.com/fxml"
+        id="StackPane"
+        fx:controller="sensemaker.gui.view.PictureInspectionView"
+        onRotate="#onRotate"
+        onScroll="#onScroll"
+        onSwipeDown="#onSwipe"
+        onSwipeLeft="#onSwipe"
+        onSwipeRight="#onSwipe"
+        onSwipeUp="#onSwipe"
+        onZoom="#onZoom"
+        fx:id="touchPane"
+        style="-fx-background-color: palegreen;"
+    >
+        <HBox
+                fx:id="buttons"
+                spacing="3.0"
+        >
+            <Button
+                    id="addElementBtn"
+                    fx:id="resetSceneBtn"
+                    mnemonicParsing="false"
+                    onAction="#handleResetScene"
+                    text="Reset scene"
+            />
+            <Button
+                    id="resetSceneBtn"
+                    fx:id="addElementBtn"
+                    mnemonicParsing="false"
+                    onAction="#handleAddElement"
+                    text="Add element"
+            />
+            <ToggleButton
+                    id="scroll"
+                    fx:id="setScrollBtn"
+                    mnemonicParsing="false"
+                    selected="true"
+                    text="Scroll"
+            >
+                <toggleGroup>
+                    <ToggleGroup fx:id="gestureSelectionGroup"/>
+                </toggleGroup>
+            </ToggleButton>
+            <ToggleButton
+                    id="setScrollBtn"
+                    fx:id="setSwipeBtn"
+                    mnemonicParsing="false"
+                    text="Swipe"
+                    toggleGroup="$gestureSelectionGroup"
+            />
+        </HBox>
+
+
+    </AnchorPane>
+
