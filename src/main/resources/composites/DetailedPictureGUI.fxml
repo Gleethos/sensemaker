@@ -25,7 +25,7 @@
 
 >
     <stylesheets>
-        <URL value="@style/PictureStyle.css"/>
+        <URL value="@../style/PictureStyle.css"/>
     </stylesheets>
     <BorderPane>
         <padding>
@@ -51,13 +51,13 @@
 
                 </Tab>
                 <Tab fx:id="tab2" text="IPTC">
-                    <fx:include fx:id="_iptc" source="IPTCGUI.fxml"/>
+                    <fx:include fx:id="_iptc" source="../simple/IPTCGUI.fxml"/>
                 </Tab>
                 <Tab fx:id="tab3" text="EXIF">
-                    <fx:include fx:id="_exif" source="EXIFGUI.fxml"/>
+                    <fx:include fx:id="_exif" source="../simple/EXIFGUI.fxml"/>
                 </Tab>
                 <Tab fx:id="tab4" text="Photographer">
-                    <fx:include fx:id="_photographer" source="PhotographerGUI.fxml"/>
+                    <fx:include fx:id="_photographer" source="../simple/PhotographerGUI.fxml"/>
                 </Tab>
             </TabPane>
         </center>

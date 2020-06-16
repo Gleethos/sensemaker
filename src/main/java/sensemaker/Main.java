@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(
-            ClassLoader.getSystemResource("SenseMakerGUI.fxml")
+            ClassLoader.getSystemResource("composites/SenseMakerGUI.fxml")
         );
         primaryStage.setTitle("Sensemaker");
         primaryStage.setScene(new Scene(root, 600, 375));

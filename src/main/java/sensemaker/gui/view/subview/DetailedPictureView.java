@@ -44,7 +44,7 @@ public class DetailedPictureView extends Pane implements IChildItem, Initializab
         super();
         _presentation = new DetailedPicturePresentation(id);
         _parent = parentContainer;
-        FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("PictureGUI.fxml"));
+        FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("composites/DetailedPictureGUI.fxml"));
         loader.setRoot(this);
         loader.setController(this);
         try {

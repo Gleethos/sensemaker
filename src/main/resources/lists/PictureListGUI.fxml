@@ -10,13 +10,18 @@
         xmlns="http://javafx.com/javafx"
         xmlns:fx="http://javafx.com/fxml"
         fx:controller="sensemaker.gui.view.lists.PictureListView"
+        AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
 >
-    <FlowPane fx:id="imageHolder">
+    <FlowPane
+        fx:id="imageHolder"
+        AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+    >
 
     </FlowPane>
     <Button mnemonicParsing="false"
             style="-fx-graphic: url('http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-9/24/open-file-icon.png');"
-            text=""/>
+            text=""
+    />
 
 
 </AnchorPane>
