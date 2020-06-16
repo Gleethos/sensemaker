@@ -6,7 +6,7 @@
     <AnchorPane
         xmlns:fx="http://javafx.com/fxml"
         id="StackPane"
-        fx:controller="sensemaker.gui.view.PictureInspectionView"
+        fx:controller="sensemaker.gui.view.composites.PictureInspectionView"
         onRotate="#onRotate"
         onScroll="#onScroll"
         onSwipeDown="#onSwipe"

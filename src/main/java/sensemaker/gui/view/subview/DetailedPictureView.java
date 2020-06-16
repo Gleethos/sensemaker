@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import sensemaker.gui.presentation.subpresentation.DetailedPicturePresentation;
+import sensemaker.gui.presentation.composites.DetailedPicturePresentation;
 import sensemaker.gui.view.interfaces.*;
 
 public class DetailedPictureView extends Pane implements IChildItem, Initializable
@@ -59,6 +59,10 @@ public class DetailedPictureView extends Pane implements IChildItem, Initializab
         closeBtn.setOnAction( e -> _parent.remove(this));
     }
 
+
+    //______________
+    // VIEW LOGIC :
+
     @Override
     public void onUnselected() {
         getStyleClass().clear();
@@ -81,7 +85,6 @@ public class DetailedPictureView extends Pane implements IChildItem, Initializab
             _moveInProgress = true;
             _touchPointId = t.getTouchPoint().getId();
             _prevPos = new Point2D(t.getTouchPoint().getSceneX(), t.getTouchPoint().getSceneY());
-            System.out.println("TOUCH BEGIN " + t.toString());
         }
         t.consume();
     }
@@ -105,7 +108,6 @@ public class DetailedPictureView extends Pane implements IChildItem, Initializab
     public void onTouchReleased(TouchEvent t) {
         if (t.getTouchPoint().getId() == _touchPointId) {
             _moveInProgress = false;
-            System.err.println("TOUCH RELEASED " + t.toString());
         }
         t.consume();
     }

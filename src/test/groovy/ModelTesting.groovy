@@ -1,9 +1,9 @@
 import org.junit.Test
-import sensemaker.gui.models.base.EXIFModel
-import sensemaker.gui.models.base.IPTCModel
-import sensemaker.gui.models.base.PhotographerModel
-import sensemaker.gui.models.base.PictureModel
-import sensemaker.gui.models.composits.DetailedPictureModel
+import sensemaker.gui.models.simple.EXIFModel
+import sensemaker.gui.models.simple.IPTCModel
+import sensemaker.gui.models.simple.PhotographerModel
+import sensemaker.gui.models.simple.PictureModel
+import sensemaker.gui.models.composites.DetailedPictureModel
 
 import java.sql.Date
 

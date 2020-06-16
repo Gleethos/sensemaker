@@ -1,48 +1,28 @@
-package sensemaker.gui.presentation;
+package sensemaker.gui.presentation.composites;
 
-import org.apache.log4j.Logger;
-import sensemaker.businesslayer.Gatekeeper;
-import sensemaker.datalayer.assembly.DALFactory;
+import sensemaker.gui.models.simple.SenseMakerModel;
+import sensemaker.gui.presentation.AbstractPresentation;
 
-/**
- *
- */
-public abstract class AbstractPresentation<ModelType>
+public class SenseMakerPresentation extends AbstractPresentation<SenseMakerModel>
 {
-    //___________
-    // LOGGING :
 
-    protected static Logger _log = Logger.getLogger(AbstractPresentation.class);
-
-    //___________________
-    // BUSINESS ACCESS :
-
-    private static Gatekeeper _business;
-    static
+    @Override
+    public SenseMakerModel getModel()
     {
-        _business = new Gatekeeper(new DALFactory().setDoMocking(false).produce());
-        _business.syncImages("images");
+        return null;
     }
 
-    protected Gatekeeper _business()
-    {
-        return _business;
-    }
-
-    //________________
-    // MODEL GETTER :
-
-    public abstract ModelType getModel();
-
-    //__________________________________
-    // MODEL-VIEW DATA SYNCRONIZATION :
-
+    //___________________________________
+    // MODEL-VIEW DATA SYNCHRONIZATION :
     /**
      * This method takes the contents of the stored
      * model instance and copies their values
      * into the individual 'Property' instances!
      */
-    public abstract void applyFromModel();
+    @Override
+    public void applyFromModel() {
+
+    }
 
     /**
      * This method takes the values of the
@@ -50,7 +30,10 @@ public abstract class AbstractPresentation<ModelType>
      * values into the model instance of
      * this presentation.
      */
-    public abstract void applyIntoModel();
+    @Override
+    public void applyIntoModel() {
+
+    }
 
     /**
      * This method means business!
@@ -61,7 +44,10 @@ public abstract class AbstractPresentation<ModelType>
      * Otherwise it is expected that the model is
      * simply updated...
      */
-    public abstract void persist();
+    @Override
+    public void persist() {
+
+    }
 
     /**
      * This method means business!
@@ -74,7 +60,9 @@ public abstract class AbstractPresentation<ModelType>
      * then the model will simply be filled by the
      * best matching entry the DAL can find! (:= search call with row-number == 1)
      */
-    public abstract void restore();
+    @Override
+    public void restore() {
 
+    }
 
 }
