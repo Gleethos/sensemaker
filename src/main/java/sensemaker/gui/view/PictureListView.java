@@ -18,34 +18,50 @@ import sensemaker.gui.view.comps.ImageWrapper;
 import java.net.URL;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class PictureListView extends AbstractView<PictureListPresentation> implements Initializable
 {
-    private PictureListPresentation _presentation;
+    //____________________
+    // FX-VIEW-ELEMENTS :
 
     @FXML
     public FlowPane imageHolder;
 
-    private List<ImageView> _images;
 
-    public PictureListView(){
+    private final List<ImageView> _images; // Dynamically placed and removed...
 
+    //________________
+    // PRESENTATION :
+
+    private PictureListPresentation _presentation;
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    public PictureListView()
+    {
+        _images = new ArrayList<>();
+        _presentation = new PictureListPresentation(_images);
     }
 
+    //________________________
+    // DEFAULT VIEW METHODS :
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        _images = List.of(
-              new ImageView(),
-              new ImageView(),
-              new ImageView(),
-              new ImageView(),
-              new ImageView(),
-              new ImageView(),
-              new ImageView(),
-              new ImageView()
-        );
+    protected void _bind(PictureListPresentation presentation)
+    {
+        _images.addAll(List.of(
+                new ImageView(),
+                new ImageView(),
+                new ImageView(),
+                new ImageView(),
+                new ImageView(),
+                new ImageView(),
+                new ImageView(),
+                new ImageView()
+        ));
         imageHolder.getChildren().addAll(_images);
         _presentation = new PictureListPresentation(_images);
         imageHolder.setPadding(new Insets(5, 0, 5, 0));
@@ -58,26 +74,34 @@ public class PictureListView extends AbstractView<PictureListPresentation> imple
             image.setOnDragDetected(event -> {
                 /* drag was detected, start a drag-and-drop gesture*/
                 /* allow any transfer mode */
-                Dragboard db = image.startDragAndDrop(TransferMode.ANY);
+                if(image.getImage() instanceof ImageWrapper &&
+                        ((ImageWrapper)image.getImage()).getPictureModel()!=null
+                ){
+                    Dragboard db = image.startDragAndDrop(TransferMode.ANY);
 
-                /* Put a string on a dragboard */
-                ClipboardContent content = new ClipboardContent();
-                content.putImage(image.getImage());
-                db.setContent(content);
+                    /* Put a string on a dragboard */
+                    ClipboardContent content = new ClipboardContent();
 
-                event.consume();
+                    content.putString(
+                            Integer.toString(
+                                    ((ImageWrapper)image.getImage())
+                                            .getPictureModel().getId()
+                            )
+                    );
+                    db.setContent(content);
+                    event.consume();
+                }
             });
         }
     }
 
     @Override
-    protected void _bind(PictureListPresentation presentation) {
-
-    }
-
-    @Override
-    protected PictureListPresentation getPresentation() {
+    protected PictureListPresentation getPresentation()
+    {
         return _presentation;
     }
+
+    //______________
+    // VIEW-LOGIC :
 
 }

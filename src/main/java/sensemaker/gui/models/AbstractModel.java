@@ -10,6 +10,20 @@ public abstract class AbstractModel<FinalType> extends AbstractSearchableModel<F
     private Date _created = null;
     private Date _deleted = null;
 
+    private static Map<Class,Map<Integer, Model>> _$cache = new HashMap<>();
+
+    protected AbstractModel<FinalType> _cached(AbstractModel<FinalType> model) {
+        if(!_$cache.containsKey(model.getClass())){
+            _$cache.put(model.getClass(), new WeakHashMap<>());
+        }
+        if(model.getId()==null) return model;
+        AbstractModel<FinalType> found = (AbstractModel<FinalType>) _$cache.get(model.getClass()).get(model.getId());
+        if(found!=null) return found;
+        _$cache.get(model.getClass()).put(model.getId(), model);
+        return  model;
+    }
+
+
     public AbstractModel(Integer id, Date created, Date deleted)
     {
         _id = id;

@@ -1,23 +1,24 @@
 package sensemaker.gui.view.comps;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import sensemaker.gui.models.base.PictureModel;
 import sensemaker.gui.models.composits.DetailedPictureModel;
 
 public class ImageWrapper extends Image
 {
-    private DetailedPictureModel _model;
+    private PictureModel _model;
 
     public ImageWrapper(String url) {
         super(url);
     }
     
-    public DetailedPictureModel getDetailedPictureModel(){
+    public PictureModel getPictureModel(){
         return _model;
     }
 
-    public void setDetailedPictureModel(DetailedPictureModel model){
+    public ImageWrapper setPictureModel(PictureModel model){
         _model = model;
+        return this;
     }
 
 }

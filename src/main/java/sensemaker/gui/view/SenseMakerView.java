@@ -1,15 +1,15 @@
 package sensemaker.gui.view;
 
-import javafx.scene.layout.AnchorPane;
 import sensemaker.gui.presentation.SenseMakerPresentation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class SenseMakerView extends AbstractView<SenseMakerPresentation> implements Initializable
+{
 
-public class SenseMakerView extends AbstractView<SenseMakerPresentation> implements Initializable {
+    //____________________
+    // FX-VIEW-ELEMENTS :
 
     @FXML
     private PictureInspectionView _pictureInspectionController;
@@ -18,13 +18,27 @@ public class SenseMakerView extends AbstractView<SenseMakerPresentation> impleme
     @FXML
     private PictureListView _pictureListController;
 
+    // Fx-Root
     @FXML
     public BorderPane root;
 
+    //________________
+    // PRESENTATION :
+
     private SenseMakerPresentation _presentation;
 
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    public SenseMakerView()
+    {
+        _presentation = new SenseMakerPresentation();
+    }
+
+    //________________________
+    // DEFAULT VIEW METHODS :
+
     @Override
-    public void initialize(URL location, ResourceBundle resources)
+    protected void _bind(SenseMakerPresentation presentation)
     {
         _presentation = new SenseMakerPresentation();
         assert _pictureInspectionController != null;
@@ -37,12 +51,12 @@ public class SenseMakerView extends AbstractView<SenseMakerPresentation> impleme
     }
 
     @Override
-    protected void _bind(SenseMakerPresentation presentation) {
-
+    protected SenseMakerPresentation getPresentation()
+    {
+        return _presentation;
     }
 
-    @Override
-    protected SenseMakerPresentation getPresentation() {
-        return null;
-    }
+    //______________
+    // VIEW-LOGIC :
+
 }

@@ -2,21 +2,36 @@ package sensemaker.gui.presentation;
 
 import sensemaker.gui.models.base.SenseMakerModel;
 
-public class SenseMakerPresentation extends AbstractPresentation<SenseMakerModel> {
+public class SenseMakerPresentation extends AbstractPresentation<SenseMakerModel>
+{
 
-    private SenseMakerModel _model;
+    @Override
+    public SenseMakerModel getModel()
+    {
+        return null;
+    }
 
-    public SenseMakerPresentation(){
-        _model = new SenseMakerModel();
+    //___________________________________
+    // MODEL-VIEW DATA SYNCHRONIZATION :
+
+    @Override
+    public void applyFromModel() {
+
     }
 
     @Override
-    public void refresh(SenseMakerModel model) {
+    public void applyIntoModel() {
 
     }
 
     @Override
-    public void applyChanges(SenseMakerModel model) {
+    public void persist() {
 
     }
+
+    @Override
+    public void restore() {
+
+    }
+
 }

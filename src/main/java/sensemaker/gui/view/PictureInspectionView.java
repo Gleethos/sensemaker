@@ -11,17 +11,14 @@ Unless otherwise agreed by Intel in writing, you may not remove or alter this no
 */
 package sensemaker.gui.view;
 
-import javafx.event.EventHandler;
 import javafx.scene.input.*;
+import sensemaker.gui.presentation.PictureInspectionPresentation;
 import sensemaker.gui.view.subview.DetailedPictureView;
 import javafx.animation.TranslateTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
@@ -29,46 +26,93 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import sensemaker.gui.view.interfaces.*;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class PictureInspectionView extends AbstractView<PictureInspectionView> implements Initializable, IParentItem
+public class PictureInspectionView extends AbstractView<PictureInspectionPresentation> implements Initializable, IParentItem
 {
+    //__________________
+    // TOUCH ELEMENTS :
 
-    @Override
-    protected void _bind(PictureInspectionView presentation) {
+    public enum GestureSelection { SWIPE, SCROLL }
+    private IChildItem currentSelection;
+    private GestureSelection selectedGesture = GestureSelection.SCROLL;
 
-    }
+    //____________________
+    // FX-VIEW-ELEMENTS :
 
-    @Override
-    protected PictureInspectionView getPresentation() {
-        return null;
-    }
-
-
-    public enum GestureSelection {
-        SWIPE, SCROLL
-    }
     @FXML private Pane touchPane;
     @FXML private HBox buttons;
     @FXML ToggleButton setScrollBtn;
     @FXML ToggleButton setSwipeBtn;
     @FXML ToggleGroup gestureSelectionGroup;
 
-    private IChildItem currentSelection;
-    private GestureSelection selectedGesture = GestureSelection.SCROLL;
+
+    //________________
+    // PRESENTATION :
+
+    private final PictureInspectionPresentation _presentation;
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    public PictureInspectionView()
+    {
+        _presentation = new PictureInspectionPresentation();
+    }
+
+    //_______________________
+    // DEFAULT VIEW METHODS :
+
+    @Override
+    protected void _bind(PictureInspectionPresentation presentation)
+    {
+        setScrollBtn.setUserData(GestureSelection.SCROLL);
+        setSwipeBtn.setUserData(GestureSelection.SWIPE);
+        gestureSelectionGroup.selectedToggleProperty().addListener(
+                (ov, oldValue, newValue) -> selectedGesture = (GestureSelection) newValue.getUserData()
+        );
+        touchPane.setOnDragOver( event ->
+        {
+            /* data is dragged over the target */
+            /* accept it only if it is not dragged from the same node
+             * and if it has a string data */
+            if (event.getGestureSource() != touchPane && event.getDragboard().hasString()) {
+                /* allow for both copying and moving, whatever user chooses */
+                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                System.out.print("It worked! : "+event.getDragboard().getString());
+                _log.info("Image dropped into inspector: id="+event.getDragboard().getString());
+                int pictureId = Integer.parseInt(event.getDragboard().getString());
+                DetailedPictureView picView = new DetailedPictureView(this, pictureId);
+                _addElement(picView);
+            }
+
+            event.consume();
+        });
+    }
+
+    @Override
+    protected PictureInspectionPresentation getPresentation()
+    {
+        return _presentation;
+    }
+
+    //______________
+    // VIEW LOGIK :
 
     @FXML
-    private void handleResetScene(ActionEvent event) {
+    private void handleResetScene(ActionEvent event)
+    {
         touchPane.getChildren().clear();
         touchPane.getChildren().add(buttons);
     }
 
     @FXML
-    private void handleAddElement(ActionEvent event) {
+    private void handleAddElement(ActionEvent event)
+    {
+        DetailedPictureView elem = new DetailedPictureView(this, 1); // Todo: Add PictureModel!
+        _addElement(elem);
+    }
 
-        DetailedPictureView elem = new DetailedPictureView(this); // Todo: Add PictureModel!
-
+    private void _addElement(DetailedPictureView elem)
+    {
         elem.setTranslateX(touchPane.getWidth() / 8.0);
         elem.setTranslateY(touchPane.getHeight() / 4.0);
         elem.setScaleX(0.5);
@@ -85,31 +129,8 @@ public class PictureInspectionView extends AbstractView<PictureInspectionView> i
         touchPane.getChildren().add(buttons);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        setScrollBtn.setUserData(GestureSelection.SCROLL);
-        setSwipeBtn.setUserData(GestureSelection.SWIPE);
-        gestureSelectionGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> ov, Toggle oldValue, Toggle newValue) {
-                selectedGesture = (GestureSelection) newValue.getUserData();
-            }
-        });
-        //_instance = this;
-        touchPane.setOnDragOver(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                /* data is dragged over the target */
-                /* accept it only if it is not dragged from the same node
-                 * and if it has a string data */
-                if (event.getGestureSource() != touchPane && event.getDragboard().hasString()) {
-                    /* allow for both copying and moving, whatever user chooses */
-                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                }
-
-                event.consume();
-            }
-        });
-    }
+    //____________________
+    // VIEW-TOUCH-LOGIC :
 
     @Override
     public void focusItem(IChildItem rect) {

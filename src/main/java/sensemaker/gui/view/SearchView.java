@@ -16,48 +16,54 @@ import java.util.ResourceBundle;
  */
 public class SearchView extends AbstractView<SearchPresentation> implements Initializable
 {
+    //____________________
+    // FX-VIEW-ELEMENTS :
+
     @FXML private TextField softSearchTextField;
     @FXML private Text displayText;
     @FXML private Button searchButton;
 
+    //________________
+    // PRESENTATION :
+
     private final SearchPresentation _presentation;
 
-    public SearchView() {
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    public SearchView()
+    {
         super();
         _presentation = new SearchPresentation();
         _log.info("New SearchView instantiated!");
     }
 
-    public void setPictureListPresentation(PictureListPresentation listPresentation){
-        _presentation.setPictureListPresentation(listPresentation);
-    }
-
-    @Override
-    public void initialize (
-            URL location,
-            ResourceBundle resources
-    ) {
-        _bind(_presentation);
-    }
+    //________________________
+    // DEFAULT VIEW METHODS :
 
     @Override
     protected void _bind(SearchPresentation presentation)
     {
         softSearchTextField.textProperty().addListener( s -> {
-            _log.info("search changes! ...to : "+s);
+            //if(_presentation.)
             displayText.setText(String.valueOf(softSearchTextField.textProperty().getValue()));
         });
         _bidi(presentation.displayProperty(), displayText.textProperty());
         _bidi(presentation.softSearchProperty(), softSearchTextField.textProperty());
-        searchButton.setOnAction((e)->{
-            presentation.search();
-        });
+        searchButton.setOnAction( e -> presentation.restore() );
     }
 
     @Override
-    protected SearchPresentation getPresentation() {
+    protected SearchPresentation getPresentation()
+    {
         return _presentation;
     }
 
+    //______________
+    // VIEW-LOGIC :
+
+    public void setPictureListPresentation(PictureListPresentation listPresentation)
+    {
+        _presentation.setPictureListPresentation(listPresentation);
+    }
 
 }

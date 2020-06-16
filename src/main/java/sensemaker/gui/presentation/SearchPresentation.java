@@ -13,84 +13,128 @@ import java.util.stream.Collectors;
 
 public class SearchPresentation extends AbstractPresentation<DetailedPictureModel>
 {
+    //______________
+    // PROPERTIES :
 
-    private StringProperty displayProperty;
-    private StringProperty softSearchProperty;
+    private final StringProperty _display = new SimpleStringProperty();
+    private final StringProperty _softSearch = new SimpleStringProperty();
 
-    DetailedPictureModel _detailedModel; // Dataholder for search queries!
+    //_________
+    // MODEL :
 
+    DetailedPictureModel _model; // Dataholder for search queries!
+
+    //___________
+    // SIBLINGS:
+    /**
+     * The PictureListPresentation needs to be known in order
+     * to pass the search results to it!
+     */
     private PictureListPresentation _listPresentation;
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public SearchPresentation()
     {
-         _detailedModel = new DetailedPictureModel(
+         _model = new DetailedPictureModel(
                  new PictureModel().setIsFoundSoftly(true),
                  new EXIFModel().setIsFoundSoftly(true),
                  new IPTCModel().setIsFoundSoftly(true),
                  new PhotographerModel().setIsFoundSoftly(true)
          ).setIsFoundSoftly(true); //:= Soft searching! :)
-
-        softSearchProperty = new SimpleStringProperty("INI VALUE");
-        displayProperty = new SimpleStringProperty("INI VALUE");
-
-        refresh(_detailedModel);
     }
 
-    public void setPictureListPresentation(PictureListPresentation listPresentation){
-        _listPresentation = listPresentation;
-    }
-
-    public void search(){
-        String key = softSearchProperty.getValue();
-        _detailedModel.getIPTCModel().setKeywords(key);
-        _detailedModel.getIPTCModel().setTitle(key);
-        _detailedModel.getIPTCModel().setCopyright(key);
-        _detailedModel.getIPTCModel().setDescription(key);
-        _detailedModel.getEXIFModel().setOrientation(key);
-        _detailedModel.getPhotographerModel().setForename(key);
-        _detailedModel.getPhotographerModel().setSurname(key);
-        _detailedModel.getPictureModel().setPath(key);
-        List<DetailedPictureModel> found = _business().searchForPictures(_detailedModel);
-
-        _listPresentation.refresh(
-                found.stream().map(d->d.getPictureModel()).collect(Collectors.toList())
-        );
-
-    }
+    //________________
+    // MODEL GETTER :
 
     @Override
-    public void refresh(DetailedPictureModel model)
+    public DetailedPictureModel getModel()
     {
-        _detailedModel = model;
-        softSearchProperty.setValue("Title: "+model.getIPTCModel().getTitle());
-        //softSearchProperty.addListener(s -> {
-        //    System.out.println("Searching");
-        //    displayProperty.setValue(softSearchProperty.getValue());
-        //});
+        return _model;
+    }
+
+    //___________________________________
+    // MODEL-VIEW DATA SYNCHRONIZATION :
+
+    @Override
+    public void applyFromModel()
+    {
+        _softSearch.setValue("Title: "+ _model.getIPTCModel().getTitle());
     }
 
     @Override
-    public void applyChanges(DetailedPictureModel model) {
+    public void applyIntoModel()
+    {
+        // The search data given by the user is too broad
+        // in possible meaning.
+        // It would not make sense to add the search key word
+        // to any model field...
+    }
+
+    @Override
+    public void persist()
+    {
+        _business().saveDetailedPicture(_model);
+    }
+
+    /**
+     * Here the 'restore' method is being understood as a search operation.
+     * Because that is what the restore functionality is ultimately doing anyways...
+     */
+    @Override
+    public void restore()
+    {
+        String key = _softSearch.getValue();
+        _model.getIPTCModel().setKeywords(key);
+        _model.getIPTCModel().setTitle(key);
+        _model.getIPTCModel().setCopyright(key);
+        _model.getIPTCModel().setDescription(key);
+        _model.getEXIFModel().setOrientation(key);
+        _model.getPhotographerModel().setForename(key);
+        _model.getPhotographerModel().setSurname(key);
+        _model.getPictureModel().setPath(key);
+        List<DetailedPictureModel> found = _business().searchForDetailedPictures(_model);
+
+        _listPresentation.getModel().addAll(
+                found.stream().map(DetailedPictureModel::getPictureModel).collect(Collectors.toList())
+        );
+        _listPresentation.applyFromModel(); // Applies the newly modified model list!
 
     }
 
-    // GETTER:
+    //______________________________
+    // PROPERTY GETTER AND SETTER :
 
-
-    public String getDisplayProperty() {
-        return displayProperty.get();
+    public String getDisplay() {
+        return _display.get();
     }
 
     public StringProperty displayProperty() {
-        return displayProperty;
+        return _display;
     }
 
-    public String getSoftSearchProperty() {
-        return softSearchProperty.get();
+    public String getSoftSearch() {
+        return _softSearch.get();
     }
 
     public StringProperty softSearchProperty() {
-        return softSearchProperty;
+        return _softSearch;
+    }
+
+    //______________________
+    // PRESENTATION LOGIC :
+
+    /**
+     * This class needs to know about the PictureListPresentation
+     * in order to pass the search result to it!
+     * This method is called by the SearchView which
+     * got the reference from the main controller/view :
+     * Namels: SenseMakerView
+     *
+     * @param listPresentation The Presentation of the list of found pictures.
+     */
+    public void setPictureListPresentation(PictureListPresentation listPresentation){
+        _listPresentation = listPresentation;
     }
 
 }
