@@ -75,7 +75,7 @@ public class PictureListView extends AbstractView<PictureListPresentation>
         imageHolder.setStyle("-fx-background-color: DAE6F3;");
         for(ImageView image : _images){
             // Drag and Drop start: (Finished insider inspection!)
-            image.setOnDragDetected(event -> {
+            image.setOnDragDetected( event -> {
                 /* drag was detected, start a drag-and-drop gesture*/
                 /* allow any transfer mode */
                 if(image.getImage() instanceof ImageWrapper &&

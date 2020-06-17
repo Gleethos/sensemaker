@@ -64,6 +64,50 @@ public class IPTCModel extends AbstractModel<IPTCModel> {
         return map;
     }
 
+    /**
+     * This method should be handled with caution as it
+     * generates random values for model fields that have not been set!
+     * It uses a seed String as a source of pseudo randomness...
+     *
+     * @param seed A String from which its hash code is used as source of pseudo randomness
+     * @return The instance itself. := Factory Pattern!
+     */
+    @Override
+    public IPTCModel completeRandomly(String seed) {
+        int index = (getId()==null)?0:getId();
+        if(seed!=null && !seed.equals("")) index = (index+1) * seed.hashCode();
+        if (getTitle() == null) {
+            String[] titles = new String[]{
+                    "Beyond Resolution!", "I ROCK", "Look at Me",
+                    "Go Fast!", "Blue Soul", "Me and My Friends",
+                    "Banana", "Beany Title", "I am a Title", "I am an awesome Title! :)"
+            };
+            setTitle(titles[Math.abs(index) % titles.length]);
+            index = index + index * index;
+        }
+        if(getCopyright()==null) {
+            String[] surnames = new String[]{
+                    "MIT", "Apache", "GNU", "Royalty Free"
+            };
+            setCopyright(surnames[Math.abs(index) % surnames.length]);
+            index = index + index * index;
+        }
+        if(getDescription()==null) {
+            String[] discriptions = new String[]{
+                    "A beautiful picture", "...interesting...", "...what a day...", "That was fun!"
+            };
+            setDescription(discriptions[Math.abs(index) % discriptions.length]);
+            index = index + index * index;
+        }
+        if(getKeywords()==null) {
+            String[] keywords = new String[]{
+                    "#Awesome", "#WhatIsGoingOn", "#SUCCESS", "#Sunny", "#SimplyMe", "#Rollin"
+            };
+            setKeywords(keywords[Math.abs(index) % keywords.length]);
+        }
+        return this;
+    }
+
     @Override
     public String getAsTableName() {
         return "IPTCs";

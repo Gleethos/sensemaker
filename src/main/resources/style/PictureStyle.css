@@ -3,17 +3,12 @@
  */
 
 .mainFxmlClassUnselected {
-    -fx-background-color: darkgray;
+    -fx-background-color: #000000;
     -fx-border-width: 0;
 }
 
 .mainFxmlClassSelected {
-    -fx-background-color: lightgray;
-    -fx-border-color: cyan;
+    -fx-background-color: #000000;
+    -fx-border-color: #007f87;
     -fx-border-width: 3;
-}
-
-.RealmNode{
-    -fx-min-width: 300px;
-    -fx-min-height: 300px;
 }

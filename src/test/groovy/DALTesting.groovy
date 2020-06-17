@@ -132,9 +132,9 @@ public class DALTesting
         assert detailed.contains("test_images\\bang.png, EXIF_id:1,")
         assert detailed.contains("test_images\\beany.png, EXIF_id:2,")
         assert detailed.contains("test_images\\brumm.png, EXIF_id:3,")
-        assert detailed.contains("id:1, IPTC_id:1, photographer_id:1]|[created:"+date.toString())
-        assert detailed.contains("id:2, IPTC_id:2, photographer_id:2]|[created:"+date.toString())
-        assert detailed.contains("id:3, IPTC_id:3, photographer_id:3]|[created:"+date.toString())
+        assert detailed.contains("id:1, IPTC_id:1, photographer_id:1]|[orientation:Right, created:"+date.toString())
+        assert detailed.contains("id:2, IPTC_id:2, photographer_id:2]|[orientation:Right, created:"+date.toString())
+        assert detailed.contains("id:3, IPTC_id:3, photographer_id:3]|[orientation:Right, created:"+date.toString())
         assert detailed.contains("title:bang.png]|[forename:")
 
         def found = dal.access(DetailedPictureModel.class).findBy(new DetailedPictureModel(
@@ -146,8 +146,8 @@ public class DALTesting
 
         detailed = stringify(found)
         def expectedString = "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\beany.png, EXIF_id:2, " +
-                "created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[created:"+date.toString()+", id:2]|[created:"+date.toString()+", " +
-                "id:2, title:beany.png]|[forename:Mr., created:"+date.toString()+", id:2]"
+                "created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[orientation:Right, created:"+date.toString()+", id:2, shot:2020-06-17]|" +
+                "[copyright:MIT, keywords:#Awesome, created:"+date.toString()+", description:A beautiful picture, id:2, title:beany.png]|[forename:Mr., surname:White, created:"+date.toString()+", id:2]"
 
         assert detailed.equals(expectedString)
 
@@ -159,7 +159,7 @@ public class DALTesting
                 new EXIFModel(),
                 new IPTCModel().setTitle("bea"),
                 new PhotographerModel()
-        ))).equals(expectedString.replace("forename:Mr., created:","forename:Mr., surname:Bean, created:"))
+        ))).equals(expectedString.replace("forename:Mr., surname:White, created:","forename:Mr., surname:Bean, created:"))
     }
 
     @Test
@@ -193,9 +193,9 @@ public class DALTesting
 
         //println detailed
         assert detailed.equals(
-                "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\bang.png, EXIF_id:1, created:"+date.toString()+", id:1, IPTC_id:1, photographer_id:1]|[created:"+date.toString()+", id:1]|[created:"+date.toString()+", id:1, title:bang.png]|[forename:Mr., created:"+date.toString()+", id:1]\n" +
-                "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\beany.png, EXIF_id:2, created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[created:"+date.toString()+", id:2]|[created:"+date.toString()+", id:2, title:beany.png]|[forename:Mr., created:"+date.toString()+", id:2]\n" +
-                "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\brumm.png, EXIF_id:3, created:"+date.toString()+", id:3, IPTC_id:3, photographer_id:3]|[created:"+date.toString()+", id:3]|[created:"+date.toString()+", id:3, title:brumm.png]|[forename:Mr., created:"+date.toString()+", id:3]")
+                "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\bang.png, EXIF_id:1, created:"+date.toString()+", id:1, IPTC_id:1, photographer_id:1]|[orientation:Right, created:"+date.toString()+", id:1, shot:2020-06-17]|[copyright:MIT, keywords:#Awesome, created:"+date.toString()+", description:A beautiful picture, id:1, title:bang.png]|[forename:Mr., surname:White, created:"+date.toString()+", id:1]\n" +
+                "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\beany.png, EXIF_id:2, created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[orientation:Right, created:"+date.toString()+", id:2, shot:2020-06-17]|[copyright:MIT, keywords:#Awesome, created:"+date.toString()+", description:A beautiful picture, id:2, title:beany.png]|[forename:Mr., surname:White, created:"+date.toString()+", id:2]\n" +
+                "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\brumm.png, EXIF_id:3, created:"+date.toString()+", id:3, IPTC_id:3, photographer_id:3]|[orientation:Right, created:"+date.toString()+", id:3, shot:2020-06-17]|[copyright:MIT, keywords:#Awesome, created:"+date.toString()+", description:A beautiful picture, id:3, title:brumm.png]|[forename:Mr., surname:White, created:"+date.toString()+", id:3]")
 
         dal.access(DetailedPictureModel.class).delete(found[1])
 
@@ -208,8 +208,8 @@ public class DALTesting
                 )
         )
         assert stringify(found).equals(
-            "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\bang.png, EXIF_id:1, created:"+date.toString()+", id:1, IPTC_id:1, photographer_id:1]|[created:"+date.toString()+", id:1]|[created:"+date.toString()+", id:1, title:bang.png]|[forename:Mr., created:"+date.toString()+", id:1]\n" +
-            "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\brumm.png, EXIF_id:3, created:"+date.toString()+", id:3, IPTC_id:3, photographer_id:3]|[created:"+date.toString()+", id:3]|[created:"+date.toString()+", id:3, title:brumm.png]|[forename:Mr., created:"+date.toString()+", id:3]")
+            "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\bang.png, EXIF_id:1, created:"+date.toString()+", id:1, IPTC_id:1, photographer_id:1]|[orientation:Right, created:"+date.toString()+", id:1, shot:2020-06-17]|[copyright:MIT, keywords:#Awesome, created:"+date.toString()+", description:A beautiful picture, id:1, title:bang.png]|[forename:Mr., surname:White, created:"+date.toString()+", id:1]\n" +
+            "[path:D:\\development\\java\\studium\\sensemaker\\test_images\\brumm.png, EXIF_id:3, created:"+date.toString()+", id:3, IPTC_id:3, photographer_id:3]|[orientation:Right, created:"+date.toString()+", id:3, shot:2020-06-17]|[copyright:MIT, keywords:#Awesome, created:"+date.toString()+", description:A beautiful picture, id:3, title:brumm.png]|[forename:Mr., surname:White, created:"+date.toString()+", id:3]")
 
     }
 
@@ -238,9 +238,9 @@ public class DALTesting
         assert stringify(all).contains(stringify(found))
         assert stringify(found)==stringify([all[1]])
         assert stringify(found)=="[path:D:\\development\\java\\studium\\sensemaker\\test_images\\beany.png, EXIF_id:2, " +
-                "created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[" +
-                "created:"+date.toString()+", id:2]|[created:"+date.toString()+", id:2, " +
-                "title:beany.png]|[forename:Mr., created:"+date.toString()+", id:2]"
+                "created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[orientation:Right, " +
+                "created:"+date.toString()+", id:2, shot:2020-06-17]|[copyright:MIT, keywords:#Awesome, created:"+date.toString()+", description:A beautiful picture, id:2, " +
+                "title:beany.png]|[forename:Mr., surname:White, created:"+date.toString()+", id:2]"
     }
 
 
@@ -285,9 +285,9 @@ public class DALTesting
 
         assert found.size()==1
         assert stringify(found)=="[path:D:\\development\\java\\studium\\sensemaker\\test_images\\beany.png, EXIF_id:2, " +
-                "created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[" +
-                "created:"+date.toString()+", id:2]|[created:"+date.toString()+", id:2, " +
-                "title:beany.png]|[forename:Mr., created:"+date.toString()+", id:2]"
+                "created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[orientation:Right, " +
+                "created:"+date.toString()+", id:2, shot:2020-06-17]|[copyright:MIT, keywords:#Awesome, created:"+date.toString()+", description:A beautiful picture, id:2, " +
+                "title:beany.png]|[forename:Mr., surname:White, created:"+date.toString()+", id:2]"
 
         // Adding search parameter in a different sub-model than before:
         model.getEXIFModel().setOrientation("Some orientation")
@@ -305,9 +305,9 @@ public class DALTesting
         // And now it should have worked again:
         assert found.size()==1
         assert stringify(found)=="[path:D:\\development\\java\\studium\\sensemaker\\test_images\\beany.png, EXIF_id:2, " +
-                "created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[" +
-                "created:"+date.toString()+", id:2]|[created:"+date.toString()+", id:2, " +
-                "title:beany.png]|[forename:Mr., created:"+date.toString()+", id:2]"
+                "created:"+date.toString()+", id:2, IPTC_id:2, photographer_id:2]|[orientation:Right, " +
+                "created:"+date.toString()+", id:2, shot:2020-06-17]|[copyright:MIT, keywords:#Awesome, created:"+date.toString()+", description:A beautiful picture, id:2, " +
+                "title:beany.png]|[forename:Mr., surname:White, created:"+date.toString()+", id:2]"
 
 
     }

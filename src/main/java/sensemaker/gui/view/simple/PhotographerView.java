@@ -1,6 +1,7 @@
 package sensemaker.gui.view.simple;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import sensemaker.gui.presentation.simple.PhotographerPresentation;
 import sensemaker.gui.view.AbstractView;
@@ -14,6 +15,11 @@ public class PhotographerView extends AbstractView<PhotographerPresentation>
     private TextField forenameTextField;
     @FXML
     private TextField surnameTextField;
+
+    @FXML
+    private Button _saveButton;
+    @FXML
+    private Button _reloadButton;
 
     //________________
     // PRESENTATION :
@@ -44,12 +50,22 @@ public class PhotographerView extends AbstractView<PhotographerPresentation>
     @Override
     protected void _bind(PhotographerPresentation presentation)
     {
+        assert _saveButton != null;
+        assert _reloadButton != null;
         _bidi(presentation.forenameProperty(), forenameTextField);
         _bidi(presentation.surnameProperty(), surnameTextField);
+        _saveButton.setOnAction(event -> {
+            _presentation.applyIntoModel();
+            _presentation.persist();
+        });
+        _reloadButton.setOnAction(event -> {
+            _presentation.restore();
+            _presentation.applyFromModel();
+        });
     }
 
     @Override
-    protected PhotographerPresentation getPresentation() {
+    public PhotographerPresentation getPresentation() {
         return _presentation;
     }
 

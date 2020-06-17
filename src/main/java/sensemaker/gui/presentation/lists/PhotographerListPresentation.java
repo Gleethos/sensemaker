@@ -6,6 +6,9 @@ import sensemaker.gui.models.simple.PhotographerModel;
 
 public class PhotographerListPresentation extends AbstractListPresentation<PhotographerModel>
 {
+    public PhotographerListPresentation() {
+        super(new PhotographerModel());
+    }
     /**
      *  This class is fairly empty because the logic for displaying
      *  the data as table has been generalized and implemented
@@ -33,4 +36,7 @@ public class PhotographerListPresentation extends AbstractListPresentation<Photo
 
         return new TableColumn[]{column1, column2};
     }
+
+
+
 }

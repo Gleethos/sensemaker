@@ -84,25 +84,22 @@ public class PictureInspectionView extends AbstractView<PictureInspectionPresent
         );
         touchPane.setOnDragOver( event ->
         {
-            /* data is dragged over the target */
-            /* accept it only if it is not dragged from the same node
-             * and if it has a string data */
             if (event.getGestureSource() != touchPane && event.getDragboard().hasString()) {
-                /* allow for both copying and moving, whatever user chooses */
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                System.out.print("It worked! : "+event.getDragboard().getString());
-                _log.info("Image dropped into inspector: id="+event.getDragboard().getString());
-                int pictureId = Integer.parseInt(event.getDragboard().getString());
-                DetailedPictureView picView = new DetailedPictureView(this, pictureId);
-                _addElement(picView);
             }
-
+            event.consume();
+        });
+        touchPane.setOnDragDropped( event -> {
+            _log.info("Image dropped into inspector: id="+event.getDragboard().getString());
+            int pictureId = Integer.parseInt(event.getDragboard().getString());
+            DetailedPictureView picView = new DetailedPictureView(this, pictureId);
+            _addElement(picView);
             event.consume();
         });
     }
 
     @Override
-    protected PictureInspectionPresentation getPresentation()
+    public PictureInspectionPresentation getPresentation()
     {
         return _presentation;
     }
@@ -117,19 +114,12 @@ public class PictureInspectionView extends AbstractView<PictureInspectionPresent
         touchPane.getChildren().add(buttons);
     }
 
-    @FXML
-    private void handleAddElement(ActionEvent event)
-    {
-        DetailedPictureView elem = new DetailedPictureView(this, 1); // Todo: Add PictureModel!
-        _addElement(elem);
-    }
-
     private void _addElement(DetailedPictureView elem)
     {
         elem.setTranslateX(touchPane.getWidth() / 8.0);
         elem.setTranslateY(touchPane.getHeight() / 4.0);
-        elem.setScaleX(0.5);
-        elem.setScaleY(0.5);
+        elem.setScaleX(0.75);
+        elem.setScaleY(0.75);
         touchPane.getChildren().remove(buttons);
         touchPane.getChildren().add(elem);
         touchPane.getChildren().add(buttons);

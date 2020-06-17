@@ -18,10 +18,4 @@
     >
 
     </FlowPane>
-    <Button mnemonicParsing="false"
-            style="-fx-graphic: url('http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-9/24/open-file-icon.png');"
-            text=""
-    />
-
-
 </AnchorPane>

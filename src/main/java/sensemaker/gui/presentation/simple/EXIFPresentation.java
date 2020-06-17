@@ -88,7 +88,7 @@ public class EXIFPresentation extends AbstractPresentation<EXIFModel>
      */
     @Override
     public void restore() {
-
+        _business().restore(_model);
     }
 
     //______________________________

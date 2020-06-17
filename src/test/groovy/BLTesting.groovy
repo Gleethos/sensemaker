@@ -76,9 +76,9 @@ class BLTesting {
         assert detailed.contains("test_images\\bang.png, EXIF_id:1,")
         assert detailed.contains("test_images\\beany.png, EXIF_id:2,")
         assert detailed.contains("test_images\\brumm.png, EXIF_id:3,")
-        assert detailed.contains("id:1, IPTC_id:1, photographer_id:1]|[created:"+date.toString())
-        assert detailed.contains("id:2, IPTC_id:2, photographer_id:2]|[created:"+date.toString())
-        assert detailed.contains("id:3, IPTC_id:3, photographer_id:3]|[created:"+date.toString())
+        assert detailed.contains("id:1, IPTC_id:1, photographer_id:1]|[orientation:Right, created:"+date.toString())
+        assert detailed.contains("id:2, IPTC_id:2, photographer_id:2]|[orientation:Right, created:"+date.toString())
+        assert detailed.contains("id:3, IPTC_id:3, photographer_id:3]|[orientation:Right, created:"+date.toString())
         assert detailed.contains("title:bang.png]|[forename:")
     }
 

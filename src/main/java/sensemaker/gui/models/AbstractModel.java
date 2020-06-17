@@ -31,6 +31,19 @@ public abstract class AbstractModel<FinalType> extends AbstractSearchableModel<F
         _deleted = deleted;
     }
 
+    /**
+     * This method should be handled with caution as it
+     * generates random values for model fields that have not been set!
+     * It uses a seed String as a source of pseudo randomness...
+     *
+     * @param seed A String from which its hash code is used as source of pseudo randomness
+     * @return The instance itself. := Factory Pattern!
+     */
+    public abstract FinalType completeRandomly(String seed);
+
+    //_____________________________
+    // DEFAULT GETTER AND SETTER :
+
     public Integer getId(){
         return _id;
     }

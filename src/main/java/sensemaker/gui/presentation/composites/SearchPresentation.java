@@ -124,7 +124,7 @@ public class SearchPresentation extends AbstractPresentation<DetailedPictureMode
         _model.getPhotographerModel().setSurname(key);
         _model.getPictureModel().setPath(key);
         List<DetailedPictureModel> found = _business().searchForDetailedPictures(_model);
-
+        _listPresentation.getModel().removeAll(_listPresentation.getModel());
         _listPresentation.getModel().addAll(
                 found.stream().map(DetailedPictureModel::getPictureModel).collect(Collectors.toList())
         );

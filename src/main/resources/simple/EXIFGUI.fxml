@@ -9,9 +9,39 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="sensemaker.gui.view.simple.EXIFView"
+            AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
 >
-    <VBox>
-        <TextField fx:id="shotTextField" id="shotTextField" promptText="shot"/>
-        <TextField fx:id="orientationTextField" id="orientationTextField" promptText="orientation"/>
-    </VBox>
+    <BorderPane  style="-fx-padding: 10 10 10 10;">
+        <top>
+            <HBox>
+                <Button
+                        id="saveButton"
+                        fx:id="_saveButton"
+                        mnemonicParsing="false"
+                        text="Save"
+                />
+                <Button
+                        id="reloadButton"
+                        fx:id="_reloadButton"
+                        mnemonicParsing="false"
+                        text="Reload"
+                />
+            </HBox>
+        </top>
+        <center>
+            <VBox style="-fx-padding: 10 10 10 10;">
+                <Label>
+                    Shot :
+                </Label>
+                <TextField fx:id="shotTextField" id="shotTextField" promptText="shot"/>
+                <Label>
+                    Orientation :
+                </Label>
+                <TextField fx:id="orientationTextField" id="orientationTextField" promptText="orientation"/>
+            </VBox>
+        </center>
+        <bottom>
+
+        </bottom>
+    </BorderPane>
 </AnchorPane>

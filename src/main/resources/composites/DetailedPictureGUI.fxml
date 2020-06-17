@@ -9,6 +9,7 @@
 <?import javafx.embed.swing.* ?>
 <?import javafx.geometry.* ?>
 
+<?import javafx.scene.image.ImageView?>
 <fx:root
         type="javafx.scene.layout.Pane"
         onScroll="#onScroll"
@@ -48,7 +49,9 @@
         <center>
             <TabPane>
                 <Tab fx:id="tab1" id="tab1" text="Image">
+                    <ImageView fx:id="imageView">
 
+                    </ImageView>
                 </Tab>
                 <Tab fx:id="tab2" text="IPTC">
                     <fx:include fx:id="_iptc" source="../simple/IPTCGUI.fxml"/>

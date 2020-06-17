@@ -1,6 +1,7 @@
 package sensemaker.gui.view.simple;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import sensemaker.gui.presentation.simple.IPTCPresentation;
 import sensemaker.gui.view.AbstractView;
@@ -18,6 +19,11 @@ public class IPTCView extends AbstractView<IPTCPresentation>
     private TextField copyrightTextField;
     @FXML
     private TextField keywordsTextField;
+
+    @FXML
+    private Button _saveButton;
+    @FXML
+    private Button _reloadButton;
 
     //________________
     // PRESENTATION :
@@ -48,14 +54,24 @@ public class IPTCView extends AbstractView<IPTCPresentation>
     @Override
     protected void _bind(IPTCPresentation presentation)
     {
+        assert _saveButton != null;
+        assert _reloadButton != null;
         _bidi(presentation.titleProperty(), titleTextField);
         _bidi(presentation.descriptionProperty(), descriptionTextField);
         _bidi(presentation.copyrightProperty(), copyrightTextField);
         _bidi(presentation.keywordsProperty(), keywordsTextField);
+        _saveButton.setOnAction(event -> {
+            _presentation.applyIntoModel();
+            _presentation.persist();
+        });
+        _reloadButton.setOnAction(event -> {
+            _presentation.restore();
+            _presentation.applyFromModel();
+        });
     }
 
     @Override
-    protected IPTCPresentation getPresentation()
+    public IPTCPresentation getPresentation()
     {
         return _presentation;
     }

@@ -41,6 +41,7 @@ public class PictureListPresentation extends AbstractPresentation<List<PictureMo
 
     //_____________________________
     // MODEL-VIEW SYNCHRONIZATION :
+
     /**
      * This method takes the contents of the stored
      * model instance and copies their values
@@ -49,6 +50,9 @@ public class PictureListPresentation extends AbstractPresentation<List<PictureMo
     @Override
     public void applyFromModel()
     {
+        for(int i=0; i<_images.size(); i++) {
+            _images.get(i).setImage(null); // := Removing all images...
+        }
         for(int i=0; i<_images.size() && i<_models.size(); i++){
             try {
                 _images.get(i).setImage(

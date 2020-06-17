@@ -42,7 +42,8 @@ public class PhotographerPresentation extends AbstractPresentation<PhotographerM
      */
     @Override
     public void applyFromModel() {
-
+        _forename.setValue(_model.getForename());
+        _surname.setValue(_model.getSurname());
     }
 
     /**
@@ -53,7 +54,8 @@ public class PhotographerPresentation extends AbstractPresentation<PhotographerM
      */
     @Override
     public void applyIntoModel() {
-
+        _model.setSurname(_surname.getValue());
+        _model.setForename(_forename.getValue());
     }
 
     /**
@@ -67,7 +69,7 @@ public class PhotographerPresentation extends AbstractPresentation<PhotographerM
      */
     @Override
     public void persist() {
-
+        _business().save(_model);
     }
 
     /**
@@ -83,7 +85,7 @@ public class PhotographerPresentation extends AbstractPresentation<PhotographerM
      */
     @Override
     public void restore() {
-
+        _business().restore(_model);
     }
 
     //______________________________

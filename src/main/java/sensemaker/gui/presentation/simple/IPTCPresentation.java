@@ -92,7 +92,7 @@ public class IPTCPresentation extends AbstractPresentation<IPTCModel>
      */
     @Override
     public void restore() {
-
+        _business().restore(_model);
     }
 
     //______________________________

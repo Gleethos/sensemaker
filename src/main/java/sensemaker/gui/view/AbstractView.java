@@ -31,7 +31,7 @@ public abstract class AbstractView<PresentationType> implements Initializable
      *
      * @return The corresponding presentation type of this view!
      */
-    protected abstract PresentationType getPresentation();
+    public abstract PresentationType getPresentation();
 
     //__________________________
     // DEFAULT INITIALIZATION :

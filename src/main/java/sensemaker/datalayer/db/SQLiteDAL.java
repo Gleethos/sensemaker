@@ -50,7 +50,7 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
                     @Override public List<PictureModel> findBy(PictureModel M) {
                         List<Object> prepValues = new ArrayList<>();
                         String joinedWhere = _genWhere(List.of(M) ,prepValues, " AND ");
-                        return _getAll(joinedWhere, prepValues,
+                        return _getAll("SELECT * FROM pictures"+joinedWhere, prepValues,
                                 get -> new PictureModel()
                                         .setId((Integer) get.apply("id"))
                                         .setEXIFId((Integer) get.apply("EXIF_id"))
@@ -87,7 +87,7 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
                     @Override public List<EXIFModel> findBy(EXIFModel M) {
                         List<Object> prepValues = new ArrayList<>();
                         String joinedWhere = _genWhere(List.of(M) ,prepValues, " AND ");
-                        return _getAll(joinedWhere, prepValues,
+                        return _getAll("SELECT * FROM EXIFs"+joinedWhere, prepValues,
                                 get -> new EXIFModel()
                                         .setId((Integer) get.apply("id"))
                                         .setCreated((Date) get.apply("created"))
@@ -126,7 +126,7 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
             public List<IPTCModel> findBy(IPTCModel M) {
                 List<Object> prepValues = new ArrayList<>();
                 String joinedWhere = _genWhere(List.of(M) ,prepValues, " AND ");
-                return _getAll(joinedWhere, prepValues,
+                return _getAll("SELECT * FROM IPTCs"+joinedWhere, prepValues,
                         get -> new IPTCModel()
                                 .setId((Integer) get.apply("id"))
                                 .setCreated((Date) get.apply("created"))
@@ -169,7 +169,7 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
                     public List<PhotographerModel> findBy(PhotographerModel M) {
                         List<Object> prepValues = new ArrayList<>();
                         String joinedWhere = _genWhere(List.of(M) ,prepValues, " AND ");
-                        return _getAll(joinedWhere, prepValues,
+                        return _getAll("SELECT * FROM photographers"+joinedWhere, prepValues,
                                 get -> new PhotographerModel()
                                     .setId((Integer) get.apply("id"))
                                     .setCreated((Date) get.apply("created"))
@@ -181,15 +181,6 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
 
                     @Override
                     public void save(PhotographerModel M) {
-                        if(M.getForename()==null) {
-                            int index = (M.getId()!=null)?M.getId():0;
-                            String[] names = new String[]{
-                                    "Mr.", "Jara", "Tony", "Tim", "Tom", "Tina", "Daniel",
-                                    "Silvia", "Sonja", "Leinad",
-                                    "Millton", "Sophie"
-                            };
-                            M.setForename(names[index%names.length]);
-                        }
                         _execute(_generateSaveSQLFor(M));
                         if (M.getId()==null) M.setId(_lastInsertID());
                     }
@@ -353,7 +344,7 @@ public class SQLiteDAL extends AbstractDatabaseConnection implements DAL {
         joined = joined.stream().filter(s->!s.equals("")).collect(Collectors.toList());
         // add WHERE:
         String where = String.join(outerJunctor, joined);
-        if (!where.equals("")) return "WHERE "+where;
+        if (!where.equals("")) return "\nWHERE "+where;
         return where;
 
     }

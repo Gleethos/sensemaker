@@ -43,6 +43,34 @@ public class EXIFModel extends AbstractModel<EXIFModel> {
         return list;
     }
 
+    /**
+     * This method should be handled with caution as it
+     * generates random values for model fields that have not been set!
+     * It uses a seed String as a source of pseudo randomness...
+     *
+     * @param seed A String from which its hash code is used as source of pseudo randomness
+     * @return The instance itself. := Factory Pattern!
+     */
+    @Override
+    public EXIFModel completeRandomly(String seed) {
+        int index = (getId()==null)?0:getId();
+        if(seed!=null && !seed.equals("")) index = (index+1) * seed.hashCode();
+        if (getOrientation() == null) {
+            String[] orientations = new String[]{
+                    "Right", "Left", "Up", "Down", "Inverted", "Horizontal"
+            };
+            setOrientation(orientations[Math.abs(index) % orientations.length]);
+            index = index + index * index;
+        }
+        if(getShot()==null) {
+            String[] surnames = new String[]{
+                    "2020-06-17", "2020-03-14", "2019-04-03", "1998-10-24", "2021-07-17", "2022-11-10"
+            };
+            setShot(Date.valueOf(surnames[Math.abs(index) % surnames.length]));
+        }
+        return this;
+    }
+
     @Override
     public String getAsTableName(){
         return "EXIFs";

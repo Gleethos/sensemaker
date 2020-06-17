@@ -15,7 +15,7 @@
         onSwipeUp="#onSwipe"
         onZoom="#onZoom"
         fx:id="touchPane"
-        style="-fx-background-color: palegreen;-fx-fill-height: true;"
+        style="-fx-background-color: #171736;-fx-fill-height: true;"
         AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
     >
         <HBox
@@ -23,18 +23,11 @@
                 spacing="5.0"
         >
             <Button
-                    id="addElementBtn"
-                    fx:id="addElementBtn"
-                    mnemonicParsing="false"
-                    onAction="#handleResetScene"
-                    text="Reset scene"
-            />
-            <Button
                     id="resetSceneBtn"
                     fx:id="resetSceneBtn"
                     mnemonicParsing="false"
-                    onAction="#handleAddElement"
-                    text="Add element"
+                    onAction="#handleResetScene"
+                    text="Clear"
             />
             <ToggleButton
                     id="scroll"

@@ -1,8 +1,10 @@
 package sensemaker.gui.presentation.lists;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import sensemaker.gui.models.Model;
 import sensemaker.gui.presentation.AbstractPresentation;
 
 import java.util.ArrayList;
@@ -13,27 +15,27 @@ public abstract class AbstractListPresentation<ModelType> extends AbstractPresen
     //______________
     // PROPERTIES :
 
-    private TableView _table = new TableView();
+    private final TableView _table = new TableView();
+
+    private final StringProperty _searchWord = new SimpleStringProperty();
 
     //_________
     // MODEL :
 
     private final List<ModelType> _models;
+    private final ModelType _templateModel;
 
-    public AbstractListPresentation()
+    public AbstractListPresentation(ModelType templateModel)
     {
+        _templateModel = templateModel;
         _models = new ArrayList<>();
 
-        TableColumn<String, ModelType> column1 = new TableColumn<>("First Name");
-        column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-
-        TableColumn<String, ModelType> column2 = new TableColumn<>("Last Name");
-        column2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-
-        _table.getColumns().add(column1);
-        _table.getColumns().add(column2);
-        //tableView.getItems().add(new ModelType("John", "Doe"));
-        //tableView.getItems().add(new ModelType("Jane", "Deer"));
+        TableColumn[] columns = _columns();
+        for(TableColumn column : columns){
+            _table.getColumns().add(column);
+        }
+        restore();
+        applyFromModel();
     }
 
     //_____________________________________________________________________________
@@ -50,6 +52,10 @@ public abstract class AbstractListPresentation<ModelType> extends AbstractPresen
         return _models;
     }
 
+    public ModelType getTemplateModel(){
+        return _templateModel;
+    }
+
     //_____________________________
     // MODEL-VIEW SYNCHRONIZATION :
 
@@ -60,9 +66,9 @@ public abstract class AbstractListPresentation<ModelType> extends AbstractPresen
      * into the individual 'Property' instances!
      */
     @Override
-    public void applyFromModel()
-    {
-
+    public void applyFromModel(){
+        _table.getItems().removeAll(_table.getItems());
+        _table.getItems().addAll(_models);
     }
 
     /**
@@ -72,9 +78,10 @@ public abstract class AbstractListPresentation<ModelType> extends AbstractPresen
      * this presentation.
      */
     @Override
-    public void applyIntoModel() {
-
+    public void applyIntoModel(){
+        //This should already happen automatically! (in table view items...)
     }
+
 
     /**
      * This method means business!
@@ -87,12 +94,13 @@ public abstract class AbstractListPresentation<ModelType> extends AbstractPresen
      */
     @Override
     public void persist() {
-
+        _models.forEach( m -> _business().save((Model) m) );
     }
 
     @Override
     public void restore() {
-
+        _models.removeAll(_models);
+        _models.addAll(_business().searchFor(_templateModel));
     }
 
     //______________________________
@@ -103,5 +111,12 @@ public abstract class AbstractListPresentation<ModelType> extends AbstractPresen
         return _table;
     }
 
+    public String getSearchWord(){
+        return _searchWord.getValue();
+    }
+
+    public StringProperty searchWordProperty(){
+        return _searchWord;
+    }
 
 }

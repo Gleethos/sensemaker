@@ -42,6 +42,29 @@ public class PhotographerModel extends AbstractModel<PhotographerModel> {
     }
 
     @Override
+    public PhotographerModel completeRandomly(String seed)
+    {
+        int index = (getId()==null)?0:getId();
+        if(seed!=null && !seed.equals("")) index = (index+1) * seed.hashCode();
+        if (getForename() == null) {
+            String[] forenames = new String[]{
+                    "Mr.", "Jara", "Tony", "Tim", "Tom", "Tina", "Daniel",
+                    "Silvia", "Sonja", "Leinad", "Millton", "Sophie"
+            };
+            setForename(forenames[Math.abs(index) % forenames.length]);
+            index = index + index * index;
+        }
+        if(getSurname()==null) {
+            String[] surnames = new String[]{
+                    "White", "Simpson", "Jackson", "Mayer", "Bayer", "Bean",
+                    "Schultz", "Wagner", "Hollberg", "Doe", "Deer"
+            };
+            setSurname(surnames[Math.abs(index) % surnames.length]);
+        }
+        return this;
+    }
+
+    @Override
     public String getAsTableName() {
         return "photographers";
     }

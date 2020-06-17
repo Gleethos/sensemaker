@@ -1,8 +1,10 @@
 package sensemaker.gui.view.lists;
 
+import javafx.fxml.FXML;
 import sensemaker.gui.models.simple.EXIFModel;
 import sensemaker.gui.presentation.lists.AbstractListPresentation;
 import sensemaker.gui.presentation.lists.EXIFListPresentation;
+import sensemaker.gui.view.simple.EXIFView;
 
 public class EXIFListView extends AbstractListView<EXIFModel>
 {
@@ -10,6 +12,12 @@ public class EXIFListView extends AbstractListView<EXIFModel>
     // PRESENTATION :
 
     private EXIFListPresentation _presentation;
+
+    //______________________________
+    // CHILD VIEWS / (CONTROLLER) :
+
+    @FXML
+    private EXIFView _exifController; // Used as search result view!
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -23,7 +31,13 @@ public class EXIFListView extends AbstractListView<EXIFModel>
 
 
     @Override
-    protected AbstractListPresentation<EXIFModel> getPresentation() {
+    public AbstractListPresentation<EXIFModel> getPresentation() {
         return _presentation;
+    }
+
+    @Override
+    protected void _secondaryBind(AbstractListPresentation<EXIFModel> presentation)
+    {
+        assert _exifController != null;
     }
 }

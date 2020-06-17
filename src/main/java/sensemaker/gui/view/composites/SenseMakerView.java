@@ -64,7 +64,7 @@ public class SenseMakerView extends AbstractView<SenseMakerPresentation> impleme
     }
 
     @Override
-    protected SenseMakerPresentation getPresentation()
+    public SenseMakerPresentation getPresentation()
     {
         return _presentation;
     }

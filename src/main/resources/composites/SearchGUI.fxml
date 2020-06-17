@@ -9,11 +9,11 @@
         fx:controller="sensemaker.gui.view.composites.SearchView"
 >
     <HBox>
-        <TextField fx:id="softSearchTextField" promptText="Any">
+        <TextField fx:id="_softSearchTextField" promptText="Any">
 
         </TextField>
         <Button
-                fx:id="searchButton"
+                fx:id="_searchButton"
                 mnemonicParsing="false"
                 style="
                     -fx-background-image: url('http://icons.iconarchive.com/icons/praveen/minimal-outline/128/search-icon.png');
@@ -24,7 +24,7 @@
                 "
                 text="?"
         />
-        <Text fx:id="displayText">
+        <Text fx:id="_displayText">
             ...
         </Text>
     </HBox>

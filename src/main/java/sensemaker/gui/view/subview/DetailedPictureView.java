@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 
@@ -15,6 +16,9 @@ import java.util.ResourceBundle;
 
 import sensemaker.gui.presentation.composites.DetailedPicturePresentation;
 import sensemaker.gui.view.interfaces.*;
+import sensemaker.gui.view.simple.EXIFView;
+import sensemaker.gui.view.simple.IPTCView;
+import sensemaker.gui.view.simple.PhotographerView;
 
 public class DetailedPictureView extends Pane implements IChildItem, Initializable
 {
@@ -30,7 +34,15 @@ public class DetailedPictureView extends Pane implements IChildItem, Initializab
     // FX-VIEW-ELEMENTS :
 
     @FXML
-    Button closeBtn;
+    private Button closeBtn;
+    @FXML
+    private ImageView imageView;
+    @FXML
+    private PhotographerView _photographerController;
+    @FXML
+    private IPTCView _iptcController;
+    @FXML
+    private EXIFView _exifController;
 
     //________________
     // PRESENTATION :
@@ -56,7 +68,30 @@ public class DetailedPictureView extends Pane implements IChildItem, Initializab
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        _presentation.setImageView(imageView);
+        _presentation.applyFromModel();
         closeBtn.setOnAction( e -> _parent.remove(this));
+        assert _photographerController != null;
+        assert _iptcController != null;
+        assert _exifController != null;
+        _photographerController.getPresentation().getModel().setId(
+                _presentation.getModel().getPhotographerModel().getId()
+        );
+        _photographerController.getPresentation().restore();
+        _photographerController.getPresentation().applyFromModel();
+
+        _iptcController.getPresentation().getModel().setId(
+                _presentation.getModel().getIPTCModel().getId()
+        );
+        _iptcController.getPresentation().restore();
+        _iptcController.getPresentation().applyFromModel();
+
+        _exifController.getPresentation().getModel().setId(
+                _presentation.getModel().getEXIFModel().getId()
+        );
+        _exifController.getPresentation().restore();
+        _exifController.getPresentation().applyFromModel();
+
     }
 
 

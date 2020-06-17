@@ -6,6 +6,9 @@ import sensemaker.gui.models.simple.IPTCModel;
 
 public class IPTCListPresentation extends AbstractListPresentation<IPTCModel>
 {
+    public IPTCListPresentation() {
+        super(new IPTCModel());
+    }
     /**
      *  This class is fairly empty because the logic for displaying 
      *  the data as table has been generalized and implemented
@@ -31,6 +34,12 @@ public class IPTCListPresentation extends AbstractListPresentation<IPTCModel>
         TableColumn<String, IPTCModel> column2 = new TableColumn<>("Description");
         column2.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        return new TableColumn[]{column1, column2};
+        TableColumn<String, IPTCModel> column3 = new TableColumn<>("Copyright");
+        column3.setCellValueFactory(new PropertyValueFactory<>("copyright"));
+
+        TableColumn<String, IPTCModel> column4 = new TableColumn<>("Keywords");
+        column4.setCellValueFactory(new PropertyValueFactory<>("keywords"));
+
+        return new TableColumn[]{column1, column2, column3, column4};
     }
 }

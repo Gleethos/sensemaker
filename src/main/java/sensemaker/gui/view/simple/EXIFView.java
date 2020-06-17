@@ -1,6 +1,7 @@
 package sensemaker.gui.view.simple;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import sensemaker.gui.presentation.simple.EXIFPresentation;
 import sensemaker.gui.view.AbstractView;
@@ -14,6 +15,11 @@ public class EXIFView extends AbstractView<EXIFPresentation>
     private TextField shotTextField;
     @FXML
     private TextField orientationTextField;
+
+    @FXML
+    private Button _saveButton;
+    @FXML
+    private Button _reloadButton;
 
     //________________
     // PRESENTATION :
@@ -45,12 +51,22 @@ public class EXIFView extends AbstractView<EXIFPresentation>
     @Override
     protected void _bind(EXIFPresentation presentation)
     {
+        assert _saveButton != null;
+        assert _reloadButton != null;
         _bidi(presentation.shotProperty(), shotTextField);
         _bidi(presentation.orientationProperty(), orientationTextField);
+        _saveButton.setOnAction(event -> {
+            _presentation.applyIntoModel();
+            _presentation.persist();
+        });
+        _reloadButton.setOnAction(event -> {
+            _presentation.restore();
+            _presentation.applyFromModel();
+        });
     }
 
     @Override
-    protected EXIFPresentation getPresentation()
+    public EXIFPresentation getPresentation()
     {
         return _presentation;
     }

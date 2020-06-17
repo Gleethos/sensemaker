@@ -1,9 +1,11 @@
 package sensemaker.gui.view.lists;
 
 
+import javafx.fxml.FXML;
 import sensemaker.gui.models.simple.PhotographerModel;
 import sensemaker.gui.presentation.lists.AbstractListPresentation;
 import sensemaker.gui.presentation.lists.PhotographerListPresentation;
+import sensemaker.gui.view.simple.PhotographerView;
 
 public class PhotographerListView extends AbstractListView<PhotographerModel>
 {
@@ -11,6 +13,12 @@ public class PhotographerListView extends AbstractListView<PhotographerModel>
     // PRESENTATION : 
 
     private PhotographerListPresentation _presentation;
+
+    //______________________________
+    // CHILD VIEWS / (CONTROLLER) :
+
+    @FXML
+    private PhotographerView _photographerController; // Used as search result holder!
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -24,7 +32,16 @@ public class PhotographerListView extends AbstractListView<PhotographerModel>
 
 
     @Override
-    protected AbstractListPresentation<PhotographerModel> getPresentation() {
+    public AbstractListPresentation<PhotographerModel> getPresentation() {
         return _presentation;
+    }
+
+    @Override
+    protected void _secondaryBind(AbstractListPresentation<PhotographerModel> presentation)
+    {
+        assert _photographerController != null;
+
+
+
     }
 }

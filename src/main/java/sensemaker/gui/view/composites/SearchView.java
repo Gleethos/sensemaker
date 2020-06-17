@@ -17,9 +17,9 @@ public class SearchView extends AbstractView<SearchPresentation> implements Init
     //____________________
     // FX-VIEW-ELEMENTS :
 
-    @FXML private TextField softSearchTextField;
-    @FXML private Text displayText;
-    @FXML private Button searchButton;
+    @FXML private TextField _softSearchTextField;
+    @FXML private Text _displayText;
+    @FXML private Button _searchButton;
 
     //________________
     // PRESENTATION :
@@ -53,17 +53,17 @@ public class SearchView extends AbstractView<SearchPresentation> implements Init
     @Override
     protected void _bind(SearchPresentation presentation)
     {
-        softSearchTextField.textProperty().addListener( s -> {
+        _softSearchTextField.textProperty().addListener(s -> {
             //if(_presentation.)
-            displayText.setText(String.valueOf(softSearchTextField.textProperty().getValue()));
+            _displayText.setText(String.valueOf(_softSearchTextField.textProperty().getValue()));
         });
-        _bidi(presentation.displayProperty(), displayText.textProperty());
-        _bidi(presentation.softSearchProperty(), softSearchTextField.textProperty());
-        searchButton.setOnAction( e -> presentation.restore() );
+        _bidi(presentation.displayProperty(), _displayText.textProperty());
+        _bidi(presentation.softSearchProperty(), _softSearchTextField.textProperty());
+        _searchButton.setOnAction(e -> presentation.restore() );
     }
 
     @Override
-    protected SearchPresentation getPresentation()
+    public SearchPresentation getPresentation()
     {
         return _presentation;
     }

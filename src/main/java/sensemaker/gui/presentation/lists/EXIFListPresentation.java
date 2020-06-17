@@ -6,6 +6,9 @@ import sensemaker.gui.models.simple.EXIFModel;
 
 public class EXIFListPresentation extends AbstractListPresentation<EXIFModel>
 {
+    public EXIFListPresentation() {
+        super(new EXIFModel());
+    }
     /**
      *  This class is fairly empty because the logic for displaying 
      *  the data as table has been generalized and implemented
@@ -25,11 +28,11 @@ public class EXIFListPresentation extends AbstractListPresentation<EXIFModel>
     @Override
     protected TableColumn<String, EXIFModel>[] _columns() {
 
-        TableColumn<String, EXIFModel> column1 = new TableColumn<>("First Name");
-        column1.setCellValueFactory(new PropertyValueFactory<>("forename"));
+        TableColumn<String, EXIFModel> column1 = new TableColumn<>("Shot");
+        column1.setCellValueFactory(new PropertyValueFactory<>("shot"));
 
-        TableColumn<String, EXIFModel> column2 = new TableColumn<>("Last Name");
-        column2.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        TableColumn<String, EXIFModel> column2 = new TableColumn<>("Orientation");
+        column2.setCellValueFactory(new PropertyValueFactory<>("orientation"));
 
         return new TableColumn[]{column1, column2};
     }

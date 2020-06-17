@@ -9,11 +9,49 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="sensemaker.gui.view.simple.IPTCView"
+            AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
 >
-    <VBox>
-        <TextField fx:id="titleTextField" id="" promptText="title"/>
-        <TextField fx:id="copyrightTextField" id="" promptText="copyright"/>
-        <TextField fx:id="descriptionTextField" id="" promptText="description"/>
-        <TextField fx:id="keywordsTextField" id="" promptText="keywords"/>
-    </VBox>
+    <BorderPane  style="-fx-padding: 10 10 10 10;">
+        <top>
+            <HBox>
+                <Button
+                        id="saveButton"
+                        fx:id="_saveButton"
+                        mnemonicParsing="false"
+                        text="Save"
+                />
+                <Button
+                        id="reloadButton"
+                        fx:id="_reloadButton"
+                        mnemonicParsing="false"
+                        text="Reload"
+                />
+            </HBox>
+        </top>
+        <center>
+            <VBox style="-fx-padding: 10 10 10 10;">
+                <Label>
+                    Title :
+                </Label>
+                <TextField fx:id="titleTextField" id="" promptText="title"/>
+                <Label>
+                    Copyright :
+                </Label>
+                <TextField fx:id="copyrightTextField" id="" promptText="copyright"/>
+                <Label>
+                    Description :
+                </Label>
+                <TextField fx:id="descriptionTextField" id="" promptText="description"/>
+                <Label>
+                    Keywords :
+                </Label>
+                <TextField fx:id="keywordsTextField" id="" promptText="keywords"/>
+            </VBox>
+        </center>
+        <bottom>
+
+        </bottom>
+    </BorderPane>
+
+
 </AnchorPane>
