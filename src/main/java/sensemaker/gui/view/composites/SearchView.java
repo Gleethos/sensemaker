@@ -55,7 +55,7 @@ public class SearchView extends AbstractView<SearchPresentation> implements Init
     {
         _softSearchTextField.textProperty().addListener(s -> {
             //if(_presentation.)
-            _displayText.setText(String.valueOf(_softSearchTextField.textProperty().getValue()));
+            //_displayText.setText(String.valueOf(_softSearchTextField.textProperty().getValue()));
         });
         _bidi(presentation.displayProperty(), _displayText.textProperty());
         _bidi(presentation.softSearchProperty(), _softSearchTextField.textProperty());
