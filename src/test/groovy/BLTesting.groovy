@@ -83,4 +83,58 @@ class BLTesting {
     }
 
 
+    @Test
+    void test_IPTC_has_expected_values_using_SQLDAL()
+    {
+        def dal = new DALFactory().setDoMocking(false).produce()
+        Gatekeeper gk = new Gatekeeper(dal)
+        gk.syncImages("images") // Like in production
+
+        String date = new Date(System.currentTimeMillis()).toString()
+        assert dal.access(PictureModel.class).getAll().collect{it.getCreated().toString()}.toString().contains(date.toString())
+        assert dal.access(EXIFModel.class).getAll().collect{it.getCreated().toString()}.toString().contains(date.toString())
+        assert dal.access(IPTCModel.class).getAll().collect{it.getCreated().toString()}.toString().contains(date.toString())
+        assert dal.access(PhotographerModel.class).getAll().collect{it.getCreated().toString()}.toString().contains(date.toString())
+
+        def model = new IPTCModel()
+        gk.restore(model)
+        assert model.getId()!=null
+        assert model.getCreated().toString()==date.toString()
+        assert model.getDeleted()==null
+        assert model.getTitle()!=null
+
+        model.setCopyright("TEST COPY RIGHT!")
+        gk.save(model)
+        gk.restore(model)
+        assert model.getCopyright()=="TEST COPY RIGHT!"
+    }
+
+
+    @Test
+    void test_EXIF_has_expected_values_using_SQLDAL()
+    {
+        def dal = new DALFactory().setDoMocking(false).produce()
+        Gatekeeper gk = new Gatekeeper(dal)
+        gk.syncImages("images") // Like in production
+
+        String date = new Date(System.currentTimeMillis()).toString()
+        assert dal.access(PictureModel.class).getAll().collect{it.getCreated().toString()}.toString().contains(date.toString())
+        assert dal.access(EXIFModel.class).getAll().collect{it.getCreated().toString()}.toString().contains(date.toString())
+        assert dal.access(IPTCModel.class).getAll().collect{it.getCreated().toString()}.toString().contains(date.toString())
+        assert dal.access(PhotographerModel.class).getAll().collect{it.getCreated().toString().toString()}.toString().contains(date.toString())
+
+        def model = new EXIFModel()
+        gk.restore(model)
+        assert model.getId()!=null
+        assert model.getCreated().toString()==date.toString()
+        assert model.getDeleted()==null
+        assert model.getOrientation()!=null
+
+        model.setOrientation("TEST ORIENTATION!")
+        gk.save(model)
+        gk.restore(model)
+        assert model.getOrientation()=="TEST ORIENTATION!"
+    }
+
+
 }

@@ -1,6 +1,8 @@
+
 plugins {
     id 'groovy'
     id 'java'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 group 'org.gleethos'
@@ -8,7 +10,13 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+javafx {
+    version = "14"
+    modules = [ 'javafx.controls', 'javafx.fxml']
+}
+
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -35,5 +43,22 @@ dependencies {
     compile "org.openjfx:javafx-controls:14:${platform}"
     compile "org.openjfx:javafx-fxml:14:${platform}"
 
-    compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: '2.13.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: '2.13.3'
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
+
 }
+
+
+task customFatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'sensemaker.Main'
+    }
+    baseName = 'all-in-one-jar'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+
+
+

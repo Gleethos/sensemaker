@@ -4,16 +4,17 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sensemaker.gui.models.simple.EXIFModel;
 
+/**
+ *  This class is fairly empty because the logic for displaying
+ *  the data as table has been generalized and implemented
+ *  the 'AbstractListPresentation' class!
+ */
 public class EXIFListPresentation extends AbstractListPresentation<EXIFModel>
 {
     public EXIFListPresentation() {
         super(new EXIFModel());
     }
-    /**
-     *  This class is fairly empty because the logic for displaying 
-     *  the data as table has been generalized and implemented
-     *  the 'AbstractListPresentation' class!
-     */
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**

@@ -27,6 +27,14 @@ public abstract class AbstractListView<ModelType> extends AbstractView<AbstractL
     //_______________________
     // DEFAULT VIEW METHOD :
 
+
+    /**
+     * Every view instance is expected to implement this method for binding.
+     * It is called by the 'initialize' method which is itself
+     * called by the FXML-Loader after it instantiated this very view!
+     *
+     * @param presentation The corresponding presentation type to this view type!
+     */
     @Override
     protected void _bind(AbstractListPresentation<ModelType> presentation) {
         _tableBox.getChildren().add(presentation.getTable());
@@ -44,6 +52,14 @@ public abstract class AbstractListView<ModelType> extends AbstractView<AbstractL
         _secondaryBind(presentation);
     }
 
+    /**
+     * Every list view instance is expected to implement this method for binding.
+     * It is called by the '_bin' method which is itself
+     * called by the 'initialize' methed which
+     * is ultimately called by the FXML-Loader after it instantiated this very view!
+     *
+     * @param presentation The corresponding presentation type to this view type!
+     */
     protected abstract void _secondaryBind(AbstractListPresentation<ModelType> presentation);
 
 }

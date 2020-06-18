@@ -61,6 +61,7 @@ public class SenseMakerView extends AbstractView<SenseMakerPresentation> impleme
         _searchController.setPictureListPresentation(
                 _pictureListController.getPresentation()
         );
+        _searchController.getPresentation().restore();
     }
 
     @Override

@@ -32,7 +32,7 @@
                             id="searchButton"
                             fx:id="_searchButton"
                             mnemonicParsing="false"
-                            text="Save"
+                            text="Search"
                     />
                     <Button
                             id="reloadButton"

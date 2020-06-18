@@ -9,6 +9,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  This class is generalized by
+ *  the 'AbstractPresentation' class!
+ */
 public class PictureListPresentation extends AbstractPresentation<List<PictureModel>>
 {
     //______________

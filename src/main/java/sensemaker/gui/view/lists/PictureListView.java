@@ -57,14 +57,12 @@ public class PictureListView extends AbstractView<PictureListPresentation>
     protected void _bind(PictureListPresentation presentation)
     {
         _images.addAll(List.of(
-                new ImageView(),
-                new ImageView(),
-                new ImageView(),
-                new ImageView(),
-                new ImageView(),
-                new ImageView(),
-                new ImageView(),
-                new ImageView()
+                new ImageView(), new ImageView(),
+                new ImageView(), new ImageView(),
+                new ImageView(), new ImageView(),
+                new ImageView(), new ImageView(),
+                new ImageView(), new ImageView(),
+                new ImageView(), new ImageView()
         ));
         imageHolder.getChildren().addAll(_images);
         _presentation = new PictureListPresentation(_images);

@@ -7,6 +7,10 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * This class stores cross application configuration data which is being loaded
+ * during application start.
+ */
 public class Environment
 {
     private static final Map<Thread, Environment> _instances = new ConcurrentHashMap<>();
@@ -14,6 +18,8 @@ public class Environment
 
     private Environment() {
         System.setProperty("log4j.properties", String.valueOf(this.getClass().getResource("log4j.properties")));
+        System.setProperty("log4j.configurationFile",String.valueOf(this.getClass().getResource("log4j.properties")));
+
         _settings = Settings.instance();
     }
 

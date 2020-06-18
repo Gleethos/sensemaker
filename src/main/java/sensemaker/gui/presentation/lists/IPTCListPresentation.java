@@ -3,17 +3,17 @@ package sensemaker.gui.presentation.lists;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sensemaker.gui.models.simple.IPTCModel;
-
+/**
+ *  This class is fairly empty because the logic for displaying
+ *  the data as table has been generalized and implemented
+ *  the 'AbstractListPresentation' class!
+ */
 public class IPTCListPresentation extends AbstractListPresentation<IPTCModel>
 {
     public IPTCListPresentation() {
         super(new IPTCModel());
     }
-    /**
-     *  This class is fairly empty because the logic for displaying 
-     *  the data as table has been generalized and implemented
-     *  the 'AbstractListPresentation' class!
-     */
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**

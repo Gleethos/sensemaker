@@ -3,17 +3,17 @@ package sensemaker.gui.presentation.lists;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sensemaker.gui.models.simple.PhotographerModel;
-
+/**
+ *  This class is fairly empty because the logic for displaying
+ *  the data as table has been generalized and implemented
+ *  the 'AbstractListPresentation' class!
+ */
 public class PhotographerListPresentation extends AbstractListPresentation<PhotographerModel>
 {
     public PhotographerListPresentation() {
         super(new PhotographerModel());
     }
-    /**
-     *  This class is fairly empty because the logic for displaying
-     *  the data as table has been generalized and implemented
-     *  the 'AbstractListPresentation' class!
-     */
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**

@@ -37,7 +37,7 @@ public class Gatekeeper {
 
             List<String> result = walk
                     .map(Path::toString)
-                    .filter(f -> f.endsWith(".png"))
+                    .filter(f -> f.endsWith(".png")||f.endsWith(".jpg"))
                     .collect(Collectors.toList()
                     );
 

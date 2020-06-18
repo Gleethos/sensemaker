@@ -23,7 +23,7 @@ public abstract class AbstractListPresentation<ModelType> extends AbstractPresen
     // MODEL :
 
     private final List<ModelType> _models;
-    private final ModelType _templateModel;
+    private ModelType _templateModel;
 
     public AbstractListPresentation(ModelType templateModel)
     {
@@ -54,6 +54,10 @@ public abstract class AbstractListPresentation<ModelType> extends AbstractPresen
 
     public ModelType getTemplateModel(){
         return _templateModel;
+    }
+
+    public void setTemplateModel(ModelType model){
+        _templateModel = model;
     }
 
     //_____________________________

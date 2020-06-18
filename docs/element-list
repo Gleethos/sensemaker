@@ -1,0 +1,21 @@
+unnamed package
+sensemaker
+sensemaker.businesslayer
+sensemaker.datalayer.API
+sensemaker.datalayer.assembly
+sensemaker.datalayer.db
+sensemaker.datalayer.mock
+sensemaker.gui.models
+sensemaker.gui.models.composites
+sensemaker.gui.models.simple
+sensemaker.gui.presentation
+sensemaker.gui.presentation.composites
+sensemaker.gui.presentation.lists
+sensemaker.gui.presentation.simple
+sensemaker.gui.view
+sensemaker.gui.view.composites
+sensemaker.gui.view.interfaces
+sensemaker.gui.view.lists
+sensemaker.gui.view.nodes
+sensemaker.gui.view.simple
+sensemaker.gui.view.subview
