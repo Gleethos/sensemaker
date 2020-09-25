@@ -13,3 +13,5 @@ many mocked aspects about the software that I will not finish simply
 because the application was intended as a learning experience and not
 a commercial product. <br>
 
+
+![sensemaker app](devdoc/docImg/crazyMany.PNG)
